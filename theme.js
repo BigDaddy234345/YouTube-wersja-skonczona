@@ -3,14 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeIcon = document.getElementById('theme-icon');
     const body = document.body;
 
-    // 1. Проверяем память браузера
+    // 1. Sprawdzamy pamięć przeglądarki
     const savedTheme = localStorage.getItem('youtube_theme');
     if (savedTheme === 'light') {
         body.classList.add('light-theme');
         if (themeIcon) themeIcon.textContent = 'dark_mode';
     }
 
-    // 2. БРОНЯ: Проверяем, существует ли кнопка, прежде чем вешать клик
+    // 2. OCHRONA: Sprawdzamy, czy przycisk istnieje, zanim podłączymy obsługę kliknięcia
     if (themeBtn) {
         themeBtn.addEventListener('click', function() {
             body.classList.toggle('light-theme');

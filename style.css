@@ -1,31 +1,31 @@
 /* ========================================
-   1. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И ЦВЕТОВАЯ СХЕМА
+   1. ZMIENNE GLOBALNE I SCHEMAT KOLORÓW
    ======================================== */
 :root {
-    /* Цвета фона */
-    --bg-main: #0f0f0f;         /* Основной чёрный фон */
-    --bg-search: #121212;       /* Фон поля поиска */
-    --bg-hover: #272727;        /* Цвет при наведении мыши */
-    --bg-secondary: #222222;    /* Фон вторичных элементов */
+    /* Kolory tła */
+    --bg-main: #0f0f0f;         /* Główne czarne tło */
+    --bg-search: #121212;       /* Tło pola wyszukiwania */
+    --bg-hover: #272727;        /* Kolor przy najechaniu myszą */
+    --bg-secondary: #222222;    /* Tło elementów drugorzędnych */
     
-    /* Цвета текста */
-    --text-primary: #ffffff;    /* Основной белый текст */
-    --text-secondary: #aaaaaa;  /* Вторичный серый текст */
+    /* Kolory tekstu */
+    --text-primary: #ffffff;    /* Główny biały tekst */
+    --text-secondary: #aaaaaa;  /* Drugorzędny szary tekst */
     
-    /* Границы и акценты */
-    --border-color: #303030;    /* Цвет границ элементов */
-    --accent-red: #cc0000;      /* Красный акцент (уведомления) */
-    --focus-border: #1c62b9;    /* Синяя рамка при фокусе */
+    /* Obramowania i akcenty */
+    --border-color: #303030;    /* Kolor granic elementów */
+    --accent-red: #cc0000;      /* Czerwony akcent (powiadomienia) */
+    --focus-border: #1c62b9;    /* Niebieska ramka przy fokusu */
     
-    /* Размеры */
-    --header-height: 56px;      /* Высота шапки */
+    /* Rozmiary */
+    --header-height: 56px;      /* Wysokość nagłówka */
 }
 
 /* ========================================
-   2. СБРОС СТИЛЕЙ И БАЗОВЫЕ ЭЛЕМЕНТЫ
+   2. RESET STYLÓW I ELEMENTY BAZOWE
    ======================================== */
 
-/* Удаляем отступы и границы по умолчанию */
+/* Usuwamy marginesy i obramowania domyślne */
 * {
     margin: 0;
     padding: 0;
@@ -33,32 +33,32 @@
     font-family: 'Roboto', Arial, sans-serif;
 }
 
-/* Основной фон и текст страницы */
+/* Główne tło i tekst strony */
 body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    overflow-x: hidden;           /* Без горизонтальной прокрутки */
-    padding-top: var(--header-height);  /* Отступ под шапку */
-    padding-left: 240px;          /* Отступ под боковое меню */
+    overflow-x: hidden;           /* Brak poziomego przewijania */
+    padding-top: var(--header-height);  /* Margines pod nagłówek */
+    padding-left: 240px;          /* Margines pod menu boczne */
 }
 
-/* Иконки Google Material Symbols */
+/* Ikony Google Material Symbols */
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     font-size: 24px;
-    user-select: none;            /* Иконки не выделяются как текст */
+    user-select: none;            /* Ikony nie są wybierane jako tekst */
 }
 
-/* Залитые иконки (для активных состояний) */
+/* Wypełnione ikony (dla stanów aktywnych) */
 .filled-icon {
     font-variation-settings: 'FILL' 1;
 }
 
 /* ========================================
-   3. ШАПКА (HEADER) И НАВИГАЦИЯ
+   3. NAGŁÓWEK (HEADER) I NAWIGACJA
    ======================================== */
 
-/* Фиксированная шапка в верхней части */
+/* Nagłówek przylepiony u góry */
 .header {
     position: fixed;
     top: 0;
@@ -70,21 +70,22 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    z-index: 1000;              /* Выше всех элементов */
+    z-index: 1000;              /* Nad wszystkimi elementami */
 }
 
-/* Контейнеры для распределения элементов в шапке */
+/* Kontenery do rozdzielenia elementów w nagłówku */
 .start, .center, .end {
     display: flex;
     align-items: center;
 }
 
-/* Левая часть шапки (логотип + меню) */
+/* Lewa część nagłówka (logo + menu) */
 .start {
     gap: 12px;
+    flex: 0 0 auto;             /* Nie rozciąga się */
 }
 
-/* Логотип */
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
@@ -100,7 +101,7 @@ body {
     height: 25px;
 }
 
-/* Код страны (например, RU) рядом с логотипом */
+/* Kod kraju (na przykład PL) obok logo */
 .country-code {
     position: absolute;
     top: -2px;
@@ -109,32 +110,34 @@ body {
     color: var(--text-secondary);
 }
 
-/* Центральная часть шапки (поиск) */
+/* Środkowa część nagłówka (wyszukiwanie) */
 .center {
-    flex: 0 1 850px;            /* Максимум 850px в ширину */
+    flex: 1;                    /* Rozciąga się i zajmuje wolne miejsce */
     gap: 16px;
     justify-content: center;
+    max-width: 850px;
+    margin: 0 auto;             /* Wyśrodkowujemy */
 }
 
-/* Поле поиска с округлёнными краями */
+/* Pole wyszukiwania ze zaokrąglonymi krawędziami */
 .search-box {
     display: flex;
-    flex: 1;                    /* Занимает всё доступное место */
+    flex: 1;                    /* Zajmuje całą dostępną przestrzeń */
     height: 40px;
     background-color: var(--bg-search);
     border: 1px solid var(--border-color);
     border-radius: 40px;
     overflow: hidden;
     margin-left: 32px;
-    transition: border-color 0.2s ease;  /* Плавная смена цвета рамки */
+    transition: border-color 0.2s ease;  /* Płynna zmiana koloru ramki */
 }
 
-/* При фокусе поле поиска выделяется синей рамкой */
+/* Po przeniesieniu fokusu pole wyszukiwania wyróżnia się niebieską ramką */
 .search-box:focus-within {
     border-color: var(--focus-border);
 }
 
-/* Поле ввода текста */
+/* Pole wprowadzania tekstu */
 .search-input {
     width: 100%;
     background: transparent;
@@ -149,7 +152,7 @@ body {
     color: #888;
 }
 
-/* Иконка клавиатуры в поиске */
+/* Ikona klawiatury w wyszukiwaniu */
 .keyboard-icon {
     padding: 0 8px;
     color: var(--text-secondary);
@@ -161,7 +164,7 @@ body {
     color: var(--text-primary);
 }
 
-/* Кнопка поиска (лупа) */
+/* Przycisk wyszukiwania (lupa) */
 .search-btn {
     width: 64px;
     background-color: var(--bg-secondary);
@@ -177,16 +180,17 @@ body {
 }
 
 /* ========================================
-   4. ПРАВАЯ ЧАСТЬ ШАПКИ (КНОПКИ И ПРОФИЛЬ)
+   4. PRAWA CZĘŚĆ NAGŁÓWKA (PRZYCISKI I PROFIL)
    ======================================== */
 
-/* Контейнер для кнопок справа */
+/* Kontener dla przycisków po prawej */
 .end {
     gap: 20px;
     justify-content: flex-end;
+    flex: 0 0 auto;             /* Nie rozciąga się */
 }
 
-/* Круглые кнопки (меню, уведомления и т.д.) */
+/* Okrągłe przyciski (menu, powiadomienia itp.) */
 .menu-icon {
     width: 40px;
     height: 40px;
@@ -199,14 +203,14 @@ body {
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s ease;
-    position: relative;         /* Для позиционирования бейджа */
+    position: relative;         /* Do pozycjonowania odznaki */
 }
 
 .menu-icon:hover {
     background-color: var(--bg-hover);
 }
 
-/* Кнопка создания видео (овальная) */
+/* Przycisk tworzenia wideo (owalny) */
 .create-btn {
     display: flex;
     align-items: center;
@@ -226,7 +230,7 @@ body {
     background-color: #303030;
 }
 
-/* Красный бейдж для уведомлений (счётчик) */
+/* Czerwona odznaka dla powiadomień (licznik) */
 .badge {
     position: absolute;
     top: -5px;
@@ -239,7 +243,7 @@ body {
     font-weight: bold;
 }
 
-/* Аватар пользователя */
+/* Awatar użytkownika */
 .avatar {
     width: 32px;
     height: 32px;
@@ -255,23 +259,23 @@ body {
 }
 
 /* ========================================
-   5. БОКОВОЕ МЕНЮ (SIDEBAR)
+   5. MENU BOCZNE (SIDEBAR)
    ======================================== */
 
-/* Основной контейнер бокового меню */
+/* Główny kontener menu bocznego */
 .sidebar {
     width: 240px;
     position: fixed;
     top: var(--header-height);
     left: 0;
-    height: calc(100vh - var(--header-height));  /* Вся высота минус шапка */
+    height: calc(100vh - var(--header-height));  /* Cała wysokość minus nagłówek */
     padding: 12px;
-    overflow-y: auto;           /* Прокрутка если много пунктов */
+    overflow-y: auto;           /* Przewijanie jeśli wiele pozycji */
     background-color: var(--bg-main);
-    z-index: 900;               /* Под шапкой */
+    z-index: 900;               /* Pod nagłówkiem */
 }
 
-/* Стиль полосы прокрутки */
+/* Styl paska przewijania */
 .sidebar::-webkit-scrollbar {
     width: 8px;
 }
@@ -285,14 +289,14 @@ body {
     background: #999;
 }
 
-/* Разделитель между секциями */
+/* Separator między sekcjami */
 hr {
     border: none;
     border-top: 1px solid #3f3f3f;
     margin: 12px 0;
 }
 
-/* Заголовки разделов (Подписки, Ваша библиотека и т.д.) */
+/* Tytuły sekcji (Subskrypcje, Twoja biblioteka itp.) */
 .section-title {
     font-size: 16px;
     padding: 0 12px;
@@ -301,7 +305,7 @@ hr {
     font-weight: 500;
 }
 
-/* Пункты меню */
+/* Pozycje menu */
 .item {
     display: flex;
     align-items: center;
@@ -313,7 +317,7 @@ hr {
     transition: background-color 0.2s ease;
 }
 
-/* При наведении или активном пункте */
+/* Po najechaniu myszą lub aktywna pozycja */
 .item:hover,
 .item.active {
     background-color: #272727;
@@ -323,7 +327,7 @@ hr {
     font-weight: 500;
 }
 
-/* Иконки в пунктах меню */
+/* Ikony w pozycjach menu */
 .item i {
     width: 24px;
     margin-right: 16px;
@@ -331,7 +335,7 @@ hr {
     text-align: center;
 }
 
-/* Аватарки каналов (меньшие) */
+/* Awatary kanałów (mniejsze) */
 .avatar-sm {
     width: 24px;
     height: 24px;
@@ -341,20 +345,20 @@ hr {
 }
 
 /* ========================================
-   6. СЕТКА ВИДЕО (ГЛАВНАЯ СТРАНИЦА)
+   6. SIATKA WIDEO (STRONA GŁÓWNA)
    ======================================== */
 
-/* CSS Grid для адаптивного расположения видео */
+/* CSS Grid do responsywnego rozmieszczenia wideo */
 .video-grid {
     display: grid;
-    /* Автоматическое заполнение: если экран большой - 4+ видео в ряд,
-       если маленький - 2-3. Минимальная ширина видео 300px */
+    /* Automatyczne wypełnianie: jeśli ekran duży - 4+ wideo w rzędzie,
+       jeśli mały - 2-3. Minimalna szerokość wideo 300px */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px 16px;
     padding: 24px;
 }
 
-/* Карточка видео */
+/* Karta wideo */
 .video-card {
     width: 100%;
     cursor: pointer;
@@ -362,7 +366,7 @@ hr {
 }
 
 .video-card:hover {
-    transform: translateY(-8px);  /* Поднимается при наведении */
+    transform: translateY(-8px);  /* Unosi się przy najechaniu */
 }
 
 .thumbnail-container { 
@@ -370,30 +374,30 @@ hr {
     aspect-ratio: 16 / 9; 
     margin-bottom: 12px; 
     position: relative; 
-    border-radius: 12px; /* Закругляем сам контейнер */
-    overflow: hidden;    /* Прячем всё, что вылезает за пределы контейнера при увеличении */
+    border-radius: 12px; /* Zaokrąglamy sam kontener */
+    overflow: hidden;    /* Ukrywamy wszystko, co wykracza poza granice kontenera przy powiększeniu */
 }
 
 .thumbnail { 
     width: 100%; 
     height: 100%; 
     object-fit: cover; 
-    transition: transform 0.3s ease; /* Добавляем плавность (0.3 секунды) */
+    transition: transform 0.3s ease; /* Dodajemy płynność (0,3 sekundy) */
 }
 
-/* Та самая магия: при наведении мышки на карточку, картинка внутри растет */
+/* Ta sama magia: gdy najedziesz myszką na kartę, obraz wewnątrz rośnie */
 .video-card:hover .thumbnail { 
-    transform: scale(1.05); /* Увеличиваем масштаб на 5% */
+    transform: scale(1.05); /* Zwiększamy skalę o 5% */
 }
 
-/* Информация под видео */
+/* Informacja pod wideo */
 .video-info-container {
     display: flex;
     gap: 12px;
     position: relative;
 }
 
-/* Аватар канала */
+/* Awatar kanału */
 .channel-avatar {
     width: 36px;
     height: 36px;
@@ -401,25 +405,25 @@ hr {
     flex-shrink: 0;
 }
 
-/* Текст видео (название + канал) */
+/* Tekst wideo (tytuł + kanał) */
 .video-text {
     flex: 1;
     padding-right: 20px;
-    min-width: 0;               /* Важно для text-overflow */
+    min-width: 0;               /* Ważne dla text-overflow */
 }
 
-/* Название видео (максимум 2 строки) */
+/* Tytuł wideo (maksimum 2 linie) */
 .video-title {
     margin: 0 0 6px 0;
     font-size: 16px;
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 2;      /* Обрезаем на 2 строках */
+    -webkit-line-clamp: 2;      /* Obcinamy na 2 liniach */
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* Название канала и статистика */
+/* Nazwa kanału i statystyki */
 .channel-name,
 .video-stats {
     margin: 0;
@@ -427,81 +431,109 @@ hr {
     color: #aaa;
 }
 
-/* Кнопка "ещё" (три точки) */
+/* Przycisk "więcej" (trzy kropki) */
 .more-btn {
     position: absolute;
     right: 0;
     top: 4px;
-    opacity: 0;                 /* Скрыта по умолчанию */
+    opacity: 0;                 /* Ukryty domyślnie */
     transition: opacity 0.2s ease;
 }
 
-/* Показываем кнопку при наведении на карточку */
+/* Pokazujemy przycisk przy najechaniu na kartę */
 .video-card:hover .more-btn {
     opacity: 1;
 }
 
 /* ========================================
-   7. АДАПТИВНОСТЬ (МОБИЛЬНЫЕ УСТРОЙСТВА)
+   7. RESPONSYWNOŚĆ (URZĄDZENIA MOBILNE)
    ======================================== */
 
-/* На смартфонах (ширина экрана до 800px) */
+/* Na smartfonach (szerokość ekranu do 800px) */
 @media (max-width: 800px) {
-    /* Убираем отступ слева для бокового меню */
+    /* Usuwamy lewy margines dla menu bocznego */
     body {
         padding-left: 0;
     }
     
-    /* Скрываем боковое меню */
+    /* Ukrywamy menu boczne */
     .sidebar {
         display: none;
     }
     
-    /* Делаем видео больше */
+    /* Powiększamy wideo */
     .video-grid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
 }
 
-/* ========================================= */
-/* СВЕТЛАЯ ТЕМА (LIGHT MODE)                 */
-/* ========================================= */
+/* 1. Poprawiamy kontener logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Odstęp między ikoną a tekstem */
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0; /* Żeby logo się nie kurczyło */
+    min-width: 120px; /* Ustalamy minimalną szerokość, żeby tekst nie skakał */
+}
+
+/* 2. Ustawiamy obrazki logo */
+.logo img {
+    width: 40px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* 3. Logika przełączania (teraz przez display: block) */
+.logo-dark { display: block; } /* Ciemny motyw — pokazujemy ciemne logo */
+.logo-light { display: none; }
+
+body.light-theme .logo-dark { display: none; }
+body.light-theme .logo-light { display: block; }
+
+/* 4. Poprawiamy "rozjeżdżanie się" nagłówka */
+.header {
+    padding: 0 16px;
+    gap: 10px; /* Niewielki odstęp między lewą, środkową i prawą częścią */
+}
+
+.header { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: var(--header-height); 
+    background-color: var(--bg-main); 
+    display: flex; 
+    justify-content: space-between; /* Ta magia rozsuwa bloki na krańce ekranu */
+    align-items: center; 
+    padding: 0 24px; /* Nieco zwiększone marginesy od krawędzi monitora, jak na YouTube */
+    z-index: 1000; 
+}
+
+.center { 
+    display: flex; 
+    flex: 1; 
+    justify-content: center; /* Centrujemy samo wyszukiwanie wewnątrz centralnego bloku */
+    max-width: 720px; 
+    margin: 0 20px; 
+}
+
+.end { 
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-end; /* Sztywno przypinamy ikony do prawej krawędzi */
+    gap: 15px; 
+    flex-shrink: 0; 
+    min-width: 150px; /* Żeby wyszukiwanie nie wypychało ikon */
+}
+
+/* KOLORY JASNEGO MOTYWU */
 body.light-theme {
-    /* Меняем базовые переменные на светлые */
-    --bg-main: #f9f9f9;
-    --bg-search: #ffffff;
-    --bg-hover: #e5e5e5;
-    --bg-secondary: #f0f0f0;
-    --text-primary: #0f0f0f;
-    --text-secondary: #606060;
+    --bg-main: #f9f9f9; --bg-search: #ffffff; --bg-hover: #e5e5e5;
+    --bg-secondary: #f0f0f0; --text-primary: #0f0f0f; --text-secondary: #606060;
     --border-color: #cccccc;
-}
-
-/* Перекрашиваем жестко заданные темные элементы (особенно для watch.php) */
-body.light-theme .action-btn,
-body.light-theme .like-dislike-group,
-body.light-theme .watch-description,
-body.light-theme .filter-btn,
-body.light-theme .sidebar .item:hover,
-body.light-theme .sidebar .item.active {
-    background-color: #e5e5e5;
-    color: #0f0f0f;
-}
-
-body.light-theme .channel-text strong,
-body.light-theme .side-video-info h4 {
-    color: #0f0f0f;
-}
-
-/* Кнопка подписки (инвертируем) */
-body.light-theme .subscribe-btn {
-    background-color: #0f0f0f;
-    color: #ffffff;
-}
-
-/* Поле ввода комментариев */
-body.light-theme .add-comment input {
-    background-color: #ffffff;
-    border-color: #cccccc;
-    color: #000000;
 }

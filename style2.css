@@ -1,29 +1,29 @@
 /* ========================================
-   СТРАНИЦА ПРОСМОТРА ВИДЕО (WATCH PAGE)
+   STRONA PRZEGLĄDANIA WIDEO (WATCH PAGE)
    ======================================== */
 
 /* ========================================
-   1. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗОВЫЕ СТИЛИ
+   1. ZMIENNE GLOBALNE I STYLE BAZOWE
    ======================================== */
 
 :root {
-    /* Цвета фона */
+    /* Kolory tła */
     --bg-main: #0f0f0f;
     --bg-search: #121212;
     --bg-secondary: #222222;
     
-    /* Цвета текста */
+    /* Kolory tekstu */
     --text-primary: #ffffff;
     --text-secondary: #aaaaaa;
     
-    /* Границы и акценты */
+    /* Obramowania i akcenty */
     --border-color: #303030;
     --accent-red: #cc0000;
     --focus-border: #1c62b9;
     --header-height: 56px;
 }
 
-/* Сброс стилей и шрифты */
+/* Reset stylów i czcionki */
 * {
     margin: 0;
     padding: 0;
@@ -36,10 +36,10 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     padding-top: var(--header-height);
-    padding-left: 0;            /* На этой странице нет бокового меню */
+    padding-left: 0;            /* Na tej stronie nie ma menu bocznego */
 }
 
-/* Иконки Google Material */
+/* Ikony Google Material */
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     font-size: 24px;
@@ -51,7 +51,7 @@ body {
 }
 
 /* ========================================
-   2. ШАПКА (HEADER) - ИДЕНТИЧНА ГЛАВНОЙ СТРАНИЦЕ
+   2. NAGŁÓWEK (HEADER) - IDENTYCZNY GŁÓWNEJ STRONIE
    ======================================== */
 
 .header {
@@ -68,17 +68,43 @@ body {
     z-index: 1000;
 }
 
-/* Контейнеры для распределения элементов */
-.start, .center, .end {
-    display: flex;
-    align-items: center;
+.header { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: var(--header-height); 
+    background-color: var(--bg-main); 
+    display: flex; 
+    justify-content: space-between; /* Ta magia rozsuwa bloki na krańce ekranu */
+    align-items: center; 
+    padding: 0 24px; /* Nieco zwiększone marginesy od krawędzi monitora, jak na YouTube */
+    z-index: 1000; 
+}
+
+.center { 
+    display: flex; 
+    flex: 1; 
+    justify-content: center; /* Centrujemy samo wyszukiwanie wewnątrz centralnego bloku */
+    max-width: 720px; 
+    margin: 0 20px; 
+}
+
+.end { 
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-end; /* Sztywno przypinamy ikony do prawej krawędzi */
+    gap: 15px; 
+    flex-shrink: 0; 
+    min-width: 150px; /* Żeby wyszukiwanie nie wypychało ikon */
 }
 
 .start {
     gap: 12px;
+    flex: 0 0 auto;             /* Nie rozciąga się */
 }
 
-/* Логотип */
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
@@ -102,11 +128,13 @@ body {
     color: var(--text-secondary);
 }
 
-/* Поиск */
+/* Wyszukiwanie */
 .center {
-    flex: 0 1 850px;
+    flex: 1;                    /* Rozciąga się i zajmuje wolne miejsce */
     gap: 16px;
     justify-content: center;
+    max-width: 850px;
+    margin: 0 auto;             /* Wyśrodkowujemy */
 }
 
 .search-box {
@@ -145,10 +173,11 @@ body {
     cursor: pointer;
 }
 
-/* Правая часть (кнопки, аватар) */
+/* Prawa część (przyciski, awatar) */
 .end {
     gap: 20px;
     justify-content: flex-end;
+    flex: 0 0 auto;             /* Nie rozciąga się */
 }
 
 .menu-icon {
@@ -196,38 +225,38 @@ body {
 }
 
 /* ========================================
-   3. ОСНОВНОЙ КОНТЕЙНЕР СТРАНИЦЫ ПРОСМОТРА
+   3. GŁÓWNY KONTENER STRONY PRZEGLĄDANIA
    ======================================== */
 
-/* Flex контейнер: видео слева, рекомендации справа */
+/* Flex kontener: wideo po lewej, rekomendacje po prawej */
 .watch-page-layout {
     display: flex;
     max-width: 1700px;
-    margin: 24px auto;          /* Центрируем по горизонтали */
+    margin: 24px auto;          /* Wyśrodkowujemy poziomo */
     padding: 0 24px;
     gap: 24px;
 }
 
 /* ========================================
-   4. ЛЕВАЯ КОЛОНКА (ВИДЕОПЛЕЕР)
+   4. LEWA KOLUMNA (ODTWARZACZ WIDEO)
    ======================================== */
 
 .primary-column {
-    flex: 1;                    /* Занимает оставшееся место */
-    min-width: 0;               /* Важно для flex-shrink */
+    flex: 1;                    /* Zajmuje pozostałą przestrzeń */
+    min-width: 0;               /* Ważne dla flex-shrink */
 }
 
-/* Контейнер для видеоплеера (адаптивный) */
+/* Kontener dla odtwarzacza wideo (responsywny) */
 .video-player-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%;     /* 16:9 соотношение сторон */
+    padding-bottom: 56.25%;     /* Współczynnik skalowania 16:9 */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 16px;
 }
 
-/* Iframe видеоплеера растягивается на весь контейнер */
+/* Iframe odtwarzacza wideo rozciąga się na cały kontener */
 .video-player-wrapper iframe {
     position: absolute;
     top: 0;
@@ -236,7 +265,7 @@ body {
     height: 100%;
 }
 
-/* Название видео */
+/* Tytuł wideo */
 .watch-title {
     font-size: 20px;
     font-weight: 700;
@@ -245,10 +274,10 @@ body {
 }
 
 /* ========================================
-   5. МЕТАИНФОРМАЦИЯ ВИДЕО (Канал + Кнопки)
+   5. METAINFORMACJE WIDEO (Kanał + Przyciski)
    ======================================== */
 
-/* Строка с информацией о канале и кнопками */
+/* Wiersz z informacją o kanale i przyciskami */
 .watch-metadata {
     display: flex;
     justify-content: space-between;
@@ -258,7 +287,7 @@ body {
     border-bottom: 1px solid #272727;
 }
 
-/* Левая часть (аватар + информация о канале) */
+/* Lewa część (awatar + informacja o kanale) */
 .channel-info {
     display: flex;
     align-items: center;
@@ -285,7 +314,7 @@ body {
     color: #aaaaaa;
 }
 
-/* Кнопка подписки (белая) */
+/* Przycisk subskrypcji (biały) */
 .subscribe-btn {
     background-color: #f1f1f1;
     color: #0f0f0f;
@@ -304,18 +333,18 @@ body {
 }
 
 /* ========================================
-   6. КНОПКИ ДЕЙСТВИЙ (ПОДЕЛИТЬСЯ, СОХРАНИТЬ, ЛАЙК/ДИЗЛАЙК)
+   6. PRZYCISKI AKCJI (UDOSTĘPNIJ, ZAPISZ, POLUBIENIE/NIECHĘĆ)
    ======================================== */
 
-/* Контейнер для всех кнопок действий */
+/* Kontener dla wszystkich przycisków akcji */
 .action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 16px;                  /* Zwiększone z 8px na 16px */
     flex-wrap: wrap;
-    margin-right: auto;         /* Прижимаем влево */
+    margin-right: auto;         /* Przyciskamy w lewo */
 }
 
-/* Стандартная кнопка действия */
+/* Standardowy przycisk akcji */
 .action-btn {
     background-color: #272727;
     color: #f1f1f1;
@@ -335,7 +364,7 @@ body {
     background-color: #3f3f3f;
 }
 
-/* Группа лайк/дизлайк (скреплены вместе) */
+/* Grupa polubienie/niechęć (połączone razem) */
 .like-dislike-group {
     display: flex;
     background-color: #272727;
@@ -349,7 +378,7 @@ body {
     border-radius: 0;
 }
 
-/* Разделитель между лайком и дизлайком */
+/* Separator między polubienie a niechęć */
 .btn-divider {
     width: 1px;
     height: 24px;
@@ -357,7 +386,7 @@ body {
 }
 
 /* ========================================
-   7. ОПИСАНИЕ ВИДЕО
+   7. OPIS WIDEO
    ======================================== */
 
 .watch-description {
@@ -368,7 +397,7 @@ body {
     line-height: 1.5;
     margin-bottom: 20px;
     max-height: 100px;
-    overflow-y: auto;           /* Прокрутка если много текста */
+    overflow-y: auto;           /* Przewijanie jeśli dużo tekstu */
 }
 
 .watch-description p {
@@ -380,10 +409,10 @@ body {
 }
 
 /* ========================================
-   8. ФОРМА КОММЕНТАРИЕВ
+   8. FORMULARZ KOMENTARZY
    ======================================== */
 
-/* Контейнер для добавления комментария */
+/* Kontener do dodawania komentarza */
 .add-comment {
     display: flex;
     gap: 10px;
@@ -409,7 +438,7 @@ body {
     border-color: var(--focus-border);
 }
 
-/* Кнопка отправки комментария */
+/* Przycisk wysyłania komentarza */
 #comment-submit-btn {
     padding: 8px 15px;
     border-radius: 18px;
@@ -426,27 +455,27 @@ body {
 }
 
 /* ========================================
-   9. ПРАВАЯ КОЛОНКА (РЕКОМЕНДАЦИИ)
+   9. PRAWA KOLUMNA (REKOMENDACJE)
    ======================================== */
 
 .secondary-column {
     width: 400px;
-    flex-shrink: 0;             /* Не сжимается на узких экранах */
+    flex-shrink: 0;             /* Nie kurczy się na wąskich ekranach */
 }
 
 /* ========================================
-   10. ФИЛЬТРЫ РЕКОМЕНДАЦИЙ
+   10. FILTRY REKOMENDACJI
    ======================================== */
 
-/* Контейнер с фильтрами (Все, Похожие, Лучшие) */
+/* Kontener z filtrami (Wszystkie, Podobne, Najlepsze) */
 .sidebar-filters {
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
-    overflow-x: auto;           /* Прокрутка если много фильтров */
+    overflow-x: auto;           /* Przewijanie jeśli wiele filtrów */
 }
 
-/* Кнопка-таблетка фильтра */
+/* Przycisk-tabletka filtra */
 .filter-btn {
     background-color: #272727;
     color: #f1f1f1;
@@ -455,7 +484,7 @@ body {
     padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;
-    white-space: nowrap;        /* Текст в одну строку */
+    white-space: nowrap;        /* Tekst w jednej linii */
     transition: all 0.2s ease;
 }
 
@@ -463,7 +492,7 @@ body {
     background-color: #3f3f3f;
 }
 
-/* Активный фильтр */
+/* Aktywny filtr */
 .filter-btn.active {
     background-color: #f1f1f1;
     color: #0f0f0f;
@@ -471,10 +500,10 @@ body {
 }
 
 /* ========================================
-   11. РЕКОМЕНДОВАННЫЕ ВИДЕО
+   11. REKOMENDOWANE WIDEO
    ======================================== */
 
-/* Карточка рекомендованного видео (горизонтальная) */
+/* Karta rekomendowanego wideo (pozioma) */
 .side-video {
     display: flex;
     gap: 8px;
@@ -487,7 +516,7 @@ body {
     opacity: 0.8;
 }
 
-/* Превью видео */
+/* Miniatura wideo */
 .side-video img {
     width: 168px;
     height: 94px;
@@ -496,25 +525,25 @@ body {
     flex-shrink: 0;
 }
 
-/* Информация о рекомендованном видео */
+/* Informacje o rekomendowanym wideo */
 .side-video-info {
     flex: 1;
-    min-width: 0;               /* Важно для text-overflow */
+    min-width: 0;               /* Ważne dla text-overflow */
 }
 
-/* Название видео (максимум 2 строки) */
+/* Tytuł wideo (maksimum 2 linie) */
 .side-video-info h4 {
     margin: 0 0 4px 0;
     font-size: 14px;
     color: #f1f1f1;
     line-height: 1.3;
     display: -webkit-box;
-    -webkit-line-clamp: 2;      /* Обрезаем на 2 строках */
+    -webkit-line-clamp: 2;      /* Obcinamy na 2 liniach */
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* Канал и статистика видео */
+/* Kanał i statystyki wideo */
 .side-video-info p {
     margin: 0;
     font-size: 12px;
@@ -522,73 +551,93 @@ body {
 }
 
 /* ========================================
-   12. АДАПТИВНОСТЬ (СМАРТФОНЫ И ПЛАНШЕТЫ)
+   12. RESPONSYWNOŚĆ (SMARTFONY I TABLETY)
    ======================================== */
 
-/* На планшетах и смартфонах (ширина экрана до 1000px) */
+/* Na tabletach i smartfonach (szerokość ekranu do 1000px) */
 @media (max-width: 1000px) {
-    /* Меняем макет с горизонтального на вертикальный */
+    /* Zmieniamy układ z poziomego na pionowy */
     .watch-page-layout {
-        flex-direction: column;  /* Рекомендации под видео */
+        flex-direction: column;  /* Rekomendacje pod wideo */
     }
     
-    /* Рекомендации занимают всю ширину */
+    /* Rekomendacje zajmują całą szerokość */
     .secondary-column {
         width: 100%;
     }
     
-    /* Информация о канале располагается вертикально */
+    /* Informacje o kanale układają się pionowo */
     .watch-metadata {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
     
-    /* Кнопки действий перестраиваются в отзывчивый макет */
+    /* Przyciski akcji przestawiają się w responsywny układ */
     .action-buttons {
         flex-wrap: wrap;
     }
 }
 
-/* ========================================= */
-/* СВЕТЛАЯ ТЕМА (LIGHT MODE)                 */
-/* ========================================= */
+/* 1. Poprawiamy kontener logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Odstęp między ikoną a tekstem */
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0; /* Żeby logo się nie kurczyło */
+    min-width: 120px; /* Ustalamy minimalną szerokość, żeby tekst nie skakał */
+}
+
+/* 2. Ustawiamy obrazki logo */
+.logo img {
+    width: 40px;
+    height: 25px;
+    object-fit: contain;
+}
+
+/* 3. Logika przełączania (teraz przez display: block) */
+.logo-dark { display: block; } /* Ciemny motyw — pokazujemy ciemne logo */
+.logo-light { display: none; }
+
+body.light-theme .logo-dark { display: none; }
+body.light-theme .logo-light { display: block; }
+
+/* 4. Poprawiamy "rozjeżdżanie się" nagłówka */
+.header {
+    padding: 0 16px;
+    gap: 10px; /* Niewielki odstęp między lewą, środkową i prawą częścią */
+}
+
+.start {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 0 0 auto; /* Lewa część się nie rozciąga */
+}
+
+.end {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Zmniejszymy odstęp między przyciskami, żeby wszystko się zmieściło */
+    flex: 0 0 auto; /* Prawa część się nie rozciąga */
+}
+
+.center {
+    flex: 1; /* Tylko środek (wyszukiwanie) się rozciąga */
+    max-width: 720px; /* Ograniczymy wyszukiwanie, żeby nie wypychało przycisków */
+    margin: 0 20px;
+}
+/* KOLORY JASNEGO MOTYWU */
 body.light-theme {
-    /* Меняем базовые переменные на светлые */
-    --bg-main: #f9f9f9;
-    --bg-search: #ffffff;
-    --bg-hover: #e5e5e5;
-    --bg-secondary: #f0f0f0;
-    --text-primary: #0f0f0f;
-    --text-secondary: #606060;
-    --border-color: #cccccc;
+    --bg-main: #f9f9f9; --bg-search: #ffffff; --bg-secondary: #f0f0f0;
+    --text-primary: #0f0f0f; --text-secondary: #606060; --border-color: #cccccc;
 }
-
-/* Перекрашиваем жестко заданные темные элементы (особенно для watch.php) */
-body.light-theme .action-btn,
-body.light-theme .like-dislike-group,
-body.light-theme .watch-description,
-body.light-theme .filter-btn,
-body.light-theme .sidebar .item:hover,
-body.light-theme .sidebar .item.active {
-    background-color: #e5e5e5;
-    color: #0f0f0f;
-}
-
-body.light-theme .channel-text strong,
-body.light-theme .side-video-info h4 {
-    color: #0f0f0f;
-}
-
-/* Кнопка подписки (инвертируем) */
-body.light-theme .subscribe-btn {
-    background-color: #0f0f0f;
-    color: #ffffff;
-}
-
-/* Поле ввода комментариев */
-body.light-theme .add-comment input {
-    background-color: #ffffff;
-    border-color: #cccccc;
-    color: #000000;
-}
+body.light-theme .action-btn, body.light-theme .like-dislike-group, 
+body.light-theme .watch-description, body.light-theme .filter-btn { background-color: #e5e5e5; color: #0f0f0f; }
+body.light-theme .channel-text strong, body.light-theme .side-video-info h4 { color: #0f0f0f; }
+body.light-theme .subscribe-btn { background-color: #0f0f0f; color: #ffffff; }
+body.light-theme .add-comment input { background-color: #ffffff; border-color: #cccccc; color: #0f0f0f; }

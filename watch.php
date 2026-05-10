@@ -1,206 +1,225 @@
 <?php
 /**
  * ========================================
- * СТРАНИЦА ПРОСМОТРА ВИДЕО (WATCH PAGE)
+ * STRONA PRZEGLĄDANIA WIDEO (WATCH PAGE)
  * ========================================
  * 
- * Этот скрипт отображает видео по его ID из БД,
- * показывает информацию о канале, описание и рекомендации
+ * Funkcja: Wyświetla video po ID z bazy danych
+ * Pokazuje: Odtwarzacz, info o kanale, opis, komentarze, rekomendacje
  */
 
-// Подключаем конфиг БД и функции
+// Podłączenie bazy danych
 require_once 'db.php';
 
 /**
  * ========================================
- * 1. ПОЛУЧЕНИЕ ID ВИДЕО И ПРОВЕРКА
+ * 1. POBIERANIE I WALIDACJA ID WIDEO
  * ========================================
  */
 
-// Получаем ID видео из URL параметра (?id=123)
-// intval() защищает от SQL инъекций преобразуя в число
+// Pobierz ID z URL parametru: watch.php?id=123
+// intval() zmienia na liczbę - chroni przed SQL injekcją
 $video_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Запрос видео по ID
+// SQL zapytanie - pobierz wideo o danym ID
 $sql = "SELECT * FROM videos WHERE id = " . $video_id;
 $result = mysqli_query($link, $sql);
 $row = mysqli_fetch_assoc($result);
 
-// Если видео не найдено - перенаправляем на главную
+/**
+ * ========================================
+ * 2. SPRAWDZENIE CZY WIDEO ISTNIEJE
+ * ========================================
+ */
+
+// Jeśli wideo nie znalezione - przekieruj na stronę główną
 if (!$row) {
     header('Location: index.php');
     exit;
 }
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <!-- ========================================
-         МЕТАДАННЫЕ СТРАНИЦЫ
+         METADANE STRONY
          ======================================== -->
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Название страницы в браузере (показывает название видео) -->
-    <title><?php echo $row['title']; ?> - Мой Ютуб</title>
+    <!-- Tytuł strony - pokazuje tytuł wideo -->
+    <title><?php echo $row['title']; ?> - Mój YouTube</title>
     
     <!-- ========================================
-         ПОДКЛЮЧЕНИЕ ШРИФТОВ И ИКОНОК
+         PODŁĄCZENIE CZCIONEK I IKON
          ======================================== -->
     
-    <!-- Иконки Google Material Symbols -->
+    <!-- Material Symbols - ikony od Google -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     
-    <!-- Иконки Font Awesome (для лайков, поделиться и т.д.) -->
+    <!-- Font Awesome - ikony sieciowe i więcej -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Стили для страницы просмотра видео -->
+    <!-- Style CSS dla strony przeglądania wideo -->
     <link rel="stylesheet" href="style2.css">
 </head>
 
 <!-- ========================================
-     ТЕЛО СТРАНИЦЫ С КЛАССОМ WATCH-PAGE
+     TREŚĆ STRONY
      ======================================== -->
 <body class="watch-page">
 
     <!-- ========================================
-         ШАПКА (HEADER) - НАВИГАЦИЯ
+         NAGŁÓWEK (HEADER) - NAWIGACJA
          ======================================== -->
 
     <header class="header">
-        <!-- Левая часть: Меню + Логотип -->
+        <!-- LEWA CZĘŚĆ: Menu + Logo -->
         <div class="start">
-            <!-- Кнопка меню (обычно открывает боковое меню на мобильных) -->
-            <a href="index.php" class="menu-icon">
-            <span class="material-symbols-outlined">menu</span>
-            </a>
+            <!-- Przycisk menu -->
+<button class="menu-icon" onclick="window.location.href='index.php'">
+    <span class="material-symbols-outlined">menu</span>
+</button>
 
-            <!-- Логотип YouTube -->
+            <!-- Logo YouTube -->
             <div class="logo">
-                <img src="images/img.jpg" alt="Логотип">
+                <!-- Dwa warianty logo - ciemny i jasny -->
+                <img src="images/img.jpg" alt="Logo" class="logo-dark">
+                <img src="images/img-light.jpg" alt="Logo" class="logo-light">
                 <span>Youtube</span>
-                <!-- Код страны -->
+                <!-- Kod kraju -->
                 <span class="country-code">PL</span>
             </div>
         </div>
 
-        <!-- Центральная часть: Поле поиска -->
+        <!-- ŚRODEK: Pole wyszukiwania -->
         <div class="center">
             <div class="search-box">
+                <!-- Pole tekstowe -->
                 <input type="text" class="search-input" placeholder="Wyszukaj">
+                <!-- Przycisk wyszukiwania -->
                 <button class="search-btn"><span class="material-symbols-outlined">search</span></button>
             </div>
         </div>
 
-        <!-- Правая часть: Кнопки и профиль -->
+        <!-- PRAWA CZĘŚĆ: Przyciski i profil -->
         <div class="end">
-            
+            <!-- Przycisk motywu -->
             <button class="create-btn" id="theme-toggle" title="Zmień motyw">
                 <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
             </button>
 
-            <button class="create-btn" title="Создать">
+            <!-- Przycisk tworzenia -->
+            <button class="create-btn" title="Utwórz">
                 <span class="material-symbols-outlined">add</span>
             </button>
-            <button class="create-btn" title="Уведомления">
+            
+            <!-- Powiadomienia -->
+            <button class="create-btn" title="Powiadomienia">
                 <span class="material-symbols-outlined">notifications</span>
                 <span class="badge">9+</span>
             </button>
-            <div class="avatar" role="img" aria-label="Профиль"></div>
+            
+            <!-- Profil użytkownika -->
+            <div class="avatar" role="img" aria-label="Profil"></div>
         </div>
     </header>
 
     <!-- ========================================
-         ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ
+         GŁÓWNA ZAWARTOŚĆ STRONY
          ======================================== -->
     <main class="watch-page-layout">
         <!-- ========================================
-             ЛЕВАЯ КОЛОНКА: ВИДЕОПЛЕЕР И ИНФОРМАЦИЯ
+             LEWA KOLUMNA: ODTWARZACZ WIDEO I INFORMACJE
              ======================================== -->
         <div class="primary-column">
             
-            <!-- Видеоплеер с адаптивным соотношением сторон 16:9 -->
+            <!-- ODTWARZACZ WIDEO -->
+            <!-- Adaptacyjny kontener z proporcją 16:9 -->
             <div class="video-player-wrapper">
-                <!-- Iframe с видео (URL из БД) -->
+                <!-- Iframe z wideo YouTube -->
                 <iframe src="<?php echo $row['video_url']; ?>" frameborder="0" allowfullscreen></iframe>
             </div>
 
-            <!-- Название видео из БД -->
+            <!-- TYTUŁ WIDEO -->
             <h1 class="watch-title"><?php echo $row['title']; ?></h1>
 
             <!-- ========================================
-                 ИНФОРМАЦИЯ О КАНАЛЕ И КНОПКИ ДЕЙСТВИЙ
+                 METADANE WIDEO (Kanał + Przyciski)
                  ======================================== -->
             <div class="watch-metadata">
                 
-                <!-- Левая часть: Аватар канала + Информация -->
+                <!-- LEWA CZĘŚĆ: Informacje o kanale -->
                 <div class="channel-info">
-                    <!-- Аватар канала -->
-                    <img src="images/img1.jpg" alt="Аватарка" class="channel-avatar">
+                    <!-- Avatar kanału -->
+                    <img src="images/img1.jpg" alt="Avatar" class="channel-avatar">
                     
-                    <!-- Название канала и количество подписчиков -->
+                    <!-- Dane kanału -->
                     <div class="channel-text">
+                        <!-- Nazwa kanału z ikoną weryfikacji -->
                         <strong>FunPay <i class="fa-solid fa-circle-check"></i></strong>
-                        <span>69,6 тыс. подписчиков</span>
+                        <!-- Liczba subskrybentów -->
+                        <span>69,6 tys. subskrybentów</span>
                     </div>
                     
-                    <!-- Кнопка подписки -->
-                    <button class="subscribe-btn">Подписаться</button>
+                    <!-- Przycisk do subskrypcji kanału -->
+                    <button class="subscribe-btn">Zasubskrybuj</button>
                 </div>
                
-                <!-- Правая часть: Кнопки действий -->
+                <!-- PRAWA CZĘŚĆ: Przyciski akcji -->
                 <div class="action-buttons">
-                    <!-- Лайк и дизлайк (скреплены вместе) -->
+                    <!-- GRUPA POLUBIENIE/NIECHĘĆ -->
                     <div class="like-dislike-group">
-                        <!-- Кнопка лайка с количеством -->
+                        <!-- Polubienie -->
                         <button class="action-btn" id="btn-like">
-                            <i class="fa-regular fa-thumbs-up"></i> 29 тыс.
+                            <i class="fa-regular fa-thumbs-up"></i> 29 tys.
                         </button>
-                        <!-- Разделитель -->
+                        <!-- Separator -->
                         <div class="btn-divider"></div>
-                        <!-- Кнопка дизлайка (без числа) -->
+                        <!-- Niechęć -->
                         <button class="action-btn" id="btn-dislike">
                             <i class="fa-regular fa-thumbs-down"></i>
                         </button>
                     </div>
                     
-                    <!-- Кнопка поделиться -->
+                    <!-- Udostępnij -->
                     <button class="action-btn">
-                        <i class="fa-solid fa-share"></i> Поделиться
+                        <i class="fa-solid fa-share"></i> Udostępnij
                     </button>
                     
-                    <!-- Кнопка сохранения видео -->
+                    <!-- Zapisz -->
                     <button class="action-btn">
-                        <i class="fa-regular fa-bookmark"></i> Сохранить
+                        <i class="fa-regular fa-bookmark"></i> Zapisz
                     </button>
                 </div>
             </div>
 
             <!-- ========================================
-                 ОПИСАНИЕ ВИДЕО
+                 OPIS WIDEO
                  ======================================== -->
             <div class="watch-description">
-                <!-- Количество просмотров и дата -->
-                <p><strong>60 тыс. просмотров • 1 день назад</strong></p>
-                <!-- Полное описание из БД -->
+                <!-- Liczba wyświetleń i data publikacji -->
+                <p><strong>60 tys. wyświetleń • 1 dzień temu</strong></p>
+                <!-- Pełny opis z bazy danych -->
                 <p><?php echo $row['description']; ?></p>
             </div>
 
             <!-- ========================================
-                 СЕКЦИЯ КОММЕНТАРИЕВ
+                 SEKCJA KOMENTARZY
                  ======================================== -->
             <div class="comments-section">
                 <h3>Komentarze</h3>
                 
-                <!-- Форма для добавления нового комментария -->
+                <!-- FORMULARZ DO DODANIA KOMENTARZA -->
                 <div class="add-comment">
+                    <!-- Pole do wpisania tekstu komentarza -->
                     <input type="text" id="comment-input" placeholder="Dodaj komentarz...">
+                    <!-- Przycisk wysyłania komentarza -->
                     <button id="comment-submit-btn">Skomentuj</button>
                 </div>
                 
-                <!-- Список комментариев -->
+                <!-- LISTA KOMENTARZY -->
                 <div id="comments-list">
-                    <!-- Пример одного комментария -->
+                    <!-- Przykład komentarza -->
                     <div class="single-comment" style="margin-top: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
                         <strong>Jan Kowalski</strong>
                         <p>Super film! Czekam na więcej.</p>
@@ -210,59 +229,58 @@ if (!$row) {
         </div>
 
         <!-- ========================================
-             ПРАВАЯ КОЛОНКА: РЕКОМЕНДОВАННЫЕ ВИДЕО
+             PRAWA KOLUMNA: POLECANE WIDEO
              ======================================== -->
         <div class="secondary-column">
             
             <!-- ========================================
-                 ФИЛЬТРЫ РЕКОМЕНДАЦИЙ
+                 FILTRY REKOMENDACJI
                  ======================================== -->
             <div class="sidebar-filters">
-                <!-- Кнопка "Все видео" (активна по умолчанию) -->
-                <button class="filter-btn active">Все видео</button>
-                <!-- Кнопка "Из той же серии" -->
-                <button class="filter-btn">Из той же серии</button>
+                <!-- Wszystkie wideo (domyślnie aktywny) -->
+                <button class="filter-btn active">Wszystkie wideo</button>
+                <!-- Z tej samej serii -->
+                <button class="filter-btn">Z tej samej serii</button>
             </div>
 
             <?php
             /**
              * ========================================
-             * ПОЛУЧЕНИЕ РЕКОМЕНДОВАННЫХ ВИДЕО
+             * POBIERANIE POLECANYCH WIDEO
              * ========================================
              * 
-             * Логика:
-             * 1. Получаем категорию текущего видео
-             * 2. Выбираем 6 видео из той же категории
-             * 3. Если их меньше 6, подбираем остальные из других категорий
+             * Algorytm:
+             * 1. Pobierz kategorię bieżącego wideo
+             * 2. Pobierz 6 wideo z tej samej kategorii (losowa kolejność)
+             * 3. Jeśli jest mniej niż 6, uzupełnij z innych kategorii
              */
             
-            // Получаем категорию текущего видео
+            // Kategoria bieżącego wideo
             $current_category = $row['category'];
             
-            // Массив с ID показанных видео (чтобы не повторять текущее)
+            // Tablica ID już wyświetlonych wideo (aby uniknąć powtórzeń)
             $shown_videos = [$video_id]; 
 
-            // Запрос: выбираем 6 видео из той же категории (случайный порядок)
+            // ZAPYTANIE 1: Wideo z tej samej kategorii
             $rec_sql = "SELECT * FROM videos WHERE category = '$current_category' AND id != $video_id ORDER BY RAND() LIMIT 6";
             $rec_result = mysqli_query($link, $rec_sql);
             $count = mysqli_num_rows($rec_result);
 
-            // Цикл: выводим найденные видео
+            // PĘTLA 1: Wyświetlanie wideo z tej samej kategorii
             while($rec_row = mysqli_fetch_assoc($rec_result)) {
-                // Добавляем ID в массив показанных
                 $shown_videos[] = $rec_row['id'];
                 ?>
-                <!-- Карточка рекомендованного видео -->
+                <!-- KARTA POLCANEGO WIDEO -->
                 <div class="side-video" onclick="window.location.href='watch.php?id=<?php echo $rec_row['id']; ?>'" style="cursor: pointer;">
-                    <!-- Превью видео -->
-                    <img src="<?php echo $rec_row['thumbnail']; ?>" alt="Превью">
-                    <!-- Информация о видео -->
+                    <!-- Miniatura wideo -->
+                    <img src="<?php echo $rec_row['thumbnail']; ?>" alt="Podgląd">
+                    <!-- Informacje -->
                     <div class="side-video-info">
-                        <!-- Название видео -->
+                        <!-- Tytuł -->
                         <h4><?php echo $rec_row['title']; ?></h4>
-                        <!-- Название канала с галочкой верификации -->
+                        <!-- Kanał z ikoną weryfikacji -->
                         <p><?php echo $rec_row['channel_name']; ?> <i class="fa-solid fa-circle-check"></i></p>
-                        <!-- Статистика (просмотры, дата) -->
+                        <!-- Statystyka -->
                         <p><?php echo $rec_row['stats']; ?></p>
                     </div>
                 </div>
@@ -271,39 +289,38 @@ if (!$row) {
 
             /**
              * ========================================
-             * ДОБАВЛЕНИЕ ВИДЕО ДРУГИХ КАТЕГОРИЙ
+             * UZUPEŁNIANIE Z INNYCH KATEGORII
              * ========================================
              * 
-             * Если видео из той же категории менее 6,
-             * добавляем недостающие видео из других категорий
+             * Jeśli wideo z tej samej kategorii jest mniej niż 6,
+             * pobieramy wideo z pozostałych kategorii
              */
 
-            // Проверяем, нужны ли ещё видео
             if ($count < 6) {
-                // Сколько видео ещё нужно показать
+                // Ile wideo jeszcze potrzeba
                 $needed = 6 - $count;
                 
-                // Преобразуем массив ID в строку для SQL (1,2,3,4...)
+                // Konwertuj tablicę ID na SQL format (1,2,3,4...)
                 $excluded_ids = implode(',', $shown_videos); 
                 
-                // Запрос: выбираем видео, которых ещё не показали
+                // ZAPYTANIE 2: Wideo z innych kategorii
                 $extra_sql = "SELECT * FROM videos WHERE id NOT IN ($excluded_ids) ORDER BY RAND() LIMIT $needed";
                 $extra_result = mysqli_query($link, $extra_sql);
                 
-                // Цикл: выводим дополнительные видео
+                // PĘTLA 2: Wyświetlanie dodatkowych wideo
                 while($extra_row = mysqli_fetch_assoc($extra_result)) {
                     ?>
-                    <!-- Карточка дополнительного видео -->
+                    <!-- KARTA DODATKOWEGO WIDEO -->
                     <div class="side-video" onclick="window.location.href='watch.php?id=<?php echo $extra_row['id']; ?>'" style="cursor: pointer;">
-                        <!-- Превью видео -->
-                        <img src="<?php echo $extra_row['thumbnail']; ?>" alt="Превью">
-                        <!-- Информация о видео -->
+                        <!-- Miniatura -->
+                        <img src="<?php echo $extra_row['thumbnail']; ?>" alt="Podgląd">
+                        <!-- Informacje -->
                         <div class="side-video-info">
-                            <!-- Название видео -->
+                            <!-- Tytuł -->
                             <h4><?php echo $extra_row['title']; ?></h4>
-                            <!-- Название канала с галочкой верификации -->
+                            <!-- Kanał -->
                             <p><?php echo $extra_row['channel_name']; ?> <i class="fa-solid fa-circle-check"></i></p>
-                            <!-- Статистика (просмотры, дата) -->
+                            <!-- Statystyka -->
                             <p><?php echo $extra_row['stats']; ?></p>
                         </div>
                     </div>
@@ -315,13 +332,13 @@ if (!$row) {
     </main>
 
     <!-- ========================================
-         СКРИПТЫ И ФУНКЦИОНАЛЬНОСТЬ
+         SKRYPTY
          ======================================== -->
     
-    <!-- Скрипт переключения темы (светлая/тёмная) -->
+    <!-- Przełączanie motywu (jasny/ciemny) -->
     <script src="theme.js"></script>
     
-    <!-- Скрипт функциональности страницы просмотра (лайки, комментарии и т.д.) -->
+    <!-- Funkcjonalność strony (polubienia, komentarze) -->
     <script src="watch.js"></script>
 </body>
 </html>

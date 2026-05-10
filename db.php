@@ -4,11 +4,11 @@ $user = 'root';
 $pass = '';
 $db = 'youtube_db';
 
-// Подключаемся
+// Łączymy się
 $link = mysqli_connect($host, $user, $pass, $db);
 
-// Проверка связи
+// Sprawdzenie połączenia
 if (!$link) {
-    die("Ошибка: база не на связи! " . mysqli_connect_error());
+    die("Błąd: baza danych nie jest połączona! " . mysqli_connect_error());
 }
 ?>

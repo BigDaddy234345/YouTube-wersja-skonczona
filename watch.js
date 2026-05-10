@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // === 1. ЛАЙКИ ===
+    // === 1. POLUBIENIA ===
     const likeBtn = document.getElementById('btn-like');
     const dislikeBtn = document.getElementById('btn-dislike');
 
@@ -18,12 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // === 2. КОММЕНТАРИИ ===
+    // === 2. KOMENTARZE ===
     const inputField = document.getElementById('comment-input');
     const submitBtn = document.getElementById('comment-submit-btn');
     const commentsList = document.getElementById('comments-list');
 
-    // Проверяем, существуют ли кнопки комментов, ПРЕЖДЕ чем вешать на них клик
+    // Sprawdzamy, czy przyciski komentarzy istnieją, ZANIM podłączymy na nich obsługę kliknięcia
     if (submitBtn && inputField && commentsList) {
         submitBtn.addEventListener('click', function(e) {
             e.preventDefault();
