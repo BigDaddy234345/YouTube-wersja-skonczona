@@ -1,29 +1,15 @@
-/* ========================================
-   STRONA PRZEGLĄDANIA WIDEO (WATCH PAGE)
-   ======================================== */
-
-/* ========================================
-   1. ZMIENNE GLOBALNE I STYLE BAZOWE
-   ======================================== */
-
 :root {
-    /* Kolory tła */
     --bg-main: #0f0f0f;
     --bg-search: #121212;
     --bg-secondary: #222222;
-    
-    /* Kolory tekstu */
     --text-primary: #ffffff;
     --text-secondary: #aaaaaa;
-    
-    /* Obramowania i akcenty */
     --border-color: #303030;
     --accent-red: #cc0000;
     --focus-border: #1c62b9;
     --header-height: 56px;
 }
 
-/* Reset stylów i czcionki */
 * {
     margin: 0;
     padding: 0;
@@ -36,10 +22,8 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     padding-top: var(--header-height);
-    padding-left: 0;            /* Na tej stronie nie ma menu bocznego */
 }
 
-/* Ikony Google Material */
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     font-size: 24px;
@@ -50,11 +34,7 @@ body {
     font-variation-settings: 'FILL' 1;
 }
 
-/* ========================================
-   2. NAGŁÓWEK (HEADER) - IDENTYCZNY GŁÓWNEJ STRONIE
-   ======================================== */
-
-.header {
+.pasek-gora {
     position: fixed;
     top: 0;
     left: 0;
@@ -65,46 +45,33 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
+    gap: 10px;
     z-index: 1000;
 }
 
-.header { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: var(--header-height); 
-    background-color: var(--bg-main); 
-    display: flex; 
-    justify-content: space-between; /* Ta magia rozsuwa bloki na krańce ekranu */
-    align-items: center; 
-    padding: 0 24px; /* Nieco zwiększone marginesy od krawędzi monitora, jak na YouTube */
-    z-index: 1000; 
-}
-
-.center { 
-    display: flex; 
-    flex: 1; 
-    justify-content: center; /* Centrujemy samo wyszukiwanie wewnątrz centralnego bloku */
-    max-width: 720px; 
-    margin: 0 20px; 
-}
-
-.end { 
-    display: flex; 
-    align-items: center; 
-    justify-content: flex-end; /* Sztywno przypinamy ikony do prawej krawędzi */
-    gap: 15px; 
-    flex-shrink: 0; 
-    min-width: 150px; /* Żeby wyszukiwanie nie wypychało ikon */
-}
-
 .start {
+    display: flex;
+    align-items: center;
     gap: 12px;
-    flex: 0 0 auto;             /* Nie rozciąga się */
+    flex: 0 0 auto;
 }
 
-/* Logo */
+.center {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    max-width: 720px;
+    margin: 0 16px;
+}
+
+.koniec {
+    display: flex;
+    align-items: center;
+    justify-content: flex-koniec;
+    gap: 16px;
+    flex: 0 0 auto;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -113,11 +80,16 @@ body {
     font-weight: 700;
     cursor: pointer;
     position: relative;
+    flex-shrink: 0;
+    min-width: 120px;
+    text-decoration: none;
+    color: var(--text-primary);
 }
 
 .logo img {
     width: 40px;
     height: 25px;
+    object-fit: contain;
 }
 
 .country-code {
@@ -128,16 +100,12 @@ body {
     color: var(--text-secondary);
 }
 
-/* Wyszukiwanie */
-.center {
-    flex: 1;                    /* Rozciąga się i zajmuje wolne miejsce */
-    gap: 16px;
-    justify-content: center;
-    max-width: 850px;
-    margin: 0 auto;             /* Wyśrodkowujemy */
-}
+.logo-dark { display: block; }
+.logo-light { display: none; }
+body.light-theme .logo-dark { display: none; }
+body.light-theme .logo-light { display: block; }
 
-.search-box {
+.wyszukiwarka {
     display: flex;
     flex: 1;
     height: 40px;
@@ -145,10 +113,14 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 40px;
     overflow: hidden;
-    margin-left: 32px;
+    transition: border-color 0.2s ease;
 }
 
-.search-input {
+.wyszukiwarka:focus-within {
+    border-color: var(--focus-border);
+}
+
+.pole-szukaj {
     width: 100%;
     background: transparent;
     border: none;
@@ -158,10 +130,8 @@ body {
     outline: none;
 }
 
-.keyboard-icon {
-    padding: 0 8px;
-    color: var(--text-secondary);
-    cursor: pointer;
+.pole-szukaj::placeholder {
+    color: #888;
 }
 
 .search-btn {
@@ -171,13 +141,11 @@ body {
     border-left: 1px solid var(--border-color);
     color: var(--text-primary);
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-/* Prawa część (przyciski, awatar) */
-.end {
-    gap: 20px;
-    justify-content: flex-end;
-    flex: 0 0 auto;             /* Nie rozciąga się */
+.search-btn:hover {
+    background-color: #303030;
 }
 
 .menu-icon {
@@ -188,6 +156,14 @@ body {
     background: transparent;
     color: var(--text-primary);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.menu-icon:hover {
+    background-color: #272727;
 }
 
 .create-btn {
@@ -202,17 +178,11 @@ body {
     border: none;
     cursor: pointer;
     position: relative;
+    transition: background-color 0.2s ease;
 }
 
-.badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--accent-red);
-    color: white;
-    font-size: 10px;
-    padding: 2px 5px;
-    border-radius: 10px;
+.create-btn:hover {
+    background-color: #303030;
 }
 
 .avatar {
@@ -222,41 +192,75 @@ body {
     background-color: #6c4cff;
     margin-left: 8px;
     cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
-/* ========================================
-   3. GŁÓWNY KONTENER STRONY PRZEGLĄDANIA
-   ======================================== */
+.avatar:hover {
+    transform: scale(1.1);
+}
 
-/* Flex kontener: wideo po lewej, rekomendacje po prawej */
+.notification-wrapper {
+    position: relative;
+}
+
+.notif-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: none;
+    padding: 16px;
+}
+
+.notif-dropdown.open {
+    display: block;
+}
+
+.notif-empty {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-align: center;
+    padding: 16px 0;
+}
+
 .watch-page-layout {
     display: flex;
-    max-width: 1700px;
-    margin: 24px auto;          /* Wyśrodkowujemy poziomo */
+    flex-direction: row; 
+    align-items: flex-start; 
+    max-width: 1800px;
+    margin: 24px auto;
     padding: 0 24px;
     gap: 24px;
 }
 
-/* ========================================
-   4. LEWA KOLUMNA (ODTWARZACZ WIDEO)
-   ======================================== */
-
 .primary-column {
-    flex: 1;                    /* Zajmuje pozostałą przestrzeń */
-    min-width: 0;               /* Ważne dla flex-shrink */
+    flex: 1 1 auto; 
+    width: 100%;
+    max-width: calc(100% - 424px); 
 }
 
-/* Kontener dla odtwarzacza wideo (responsywny) */
+
+.secondary-column {
+    flex: 0 0 400px; 
+    width: 400px;
+}
+
 .video-player-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%;     /* Współczynnik skalowania 16:9 */
+    aspect-ratio: 16 / 9; 
+    max-height: 75vh; 
     border-radius: 12px;
     overflow: hidden;
+    background-color: #000;
     margin-bottom: 16px;
 }
 
-/* Iframe odtwarzacza wideo rozciąga się na cały kontener */
 .video-player-wrapper iframe {
     position: absolute;
     top: 0;
@@ -265,7 +269,6 @@ body {
     height: 100%;
 }
 
-/* Tytuł wideo */
 .watch-title {
     font-size: 20px;
     font-weight: 700;
@@ -273,11 +276,6 @@ body {
     line-height: 1.4;
 }
 
-/* ========================================
-   5. METAINFORMACJE WIDEO (Kanał + Przyciski)
-   ======================================== */
-
-/* Wiersz z informacją o kanale i przyciskami */
 .watch-metadata {
     display: flex;
     justify-content: space-between;
@@ -287,7 +285,6 @@ body {
     border-bottom: 1px solid #272727;
 }
 
-/* Lewa część (awatar + informacja o kanale) */
 .channel-info {
     display: flex;
     align-items: center;
@@ -314,7 +311,6 @@ body {
     color: #aaaaaa;
 }
 
-/* Przycisk subskrypcji (biały) */
 .subscribe-btn {
     background-color: #f1f1f1;
     color: #0f0f0f;
@@ -332,19 +328,12 @@ body {
     background-color: #d0d0d0;
 }
 
-/* ========================================
-   6. PRZYCISKI AKCJI (UDOSTĘPNIJ, ZAPISZ, POLUBIENIE/NIECHĘĆ)
-   ======================================== */
-
-/* Kontener dla wszystkich przycisków akcji */
 .action-buttons {
     display: flex;
-    gap: 16px;                  /* Zwiększone z 8px na 16px */
+    gap: 16px;
     flex-wrap: wrap;
-    margin-right: auto;         /* Przyciskamy w lewo */
 }
 
-/* Standardowy przycisk akcji */
 .action-btn {
     background-color: #272727;
     color: #f1f1f1;
@@ -364,7 +353,6 @@ body {
     background-color: #3f3f3f;
 }
 
-/* Grupa polubienie/niechęć (połączone razem) */
 .like-dislike-group {
     display: flex;
     background-color: #272727;
@@ -378,16 +366,11 @@ body {
     border-radius: 0;
 }
 
-/* Separator między polubienie a niechęć */
 .btn-divider {
     width: 1px;
     height: 24px;
     background-color: #3f3f3f;
 }
-
-/* ========================================
-   7. OPIS WIDEO
-   ======================================== */
 
 .watch-description {
     background-color: #272727;
@@ -396,8 +379,8 @@ body {
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 20px;
-    max-height: 100px;
-    overflow-y: auto;           /* Przewijanie jeśli dużo tekstu */
+    max-height: 120px;
+    overflow-y: auto;
 }
 
 .watch-description p {
@@ -408,11 +391,11 @@ body {
     margin-bottom: 0;
 }
 
-/* ========================================
-   8. FORMULARZ KOMENTARZY
-   ======================================== */
+.comments-sekcja h3 {
+    margin-bottom: 16px;
+    font-size: 16px;
+}
 
-/* Kontener do dodawania komentarza */
 .add-comment {
     display: flex;
     gap: 10px;
@@ -428,7 +411,7 @@ body {
     background-color: #222;
     border: 1px solid #444;
     color: white;
-    padding: 10px;
+    padding: 0 10px;
     font-size: 14px;
     transition: border-color 0.2s ease;
 }
@@ -438,7 +421,6 @@ body {
     border-color: var(--focus-border);
 }
 
-/* Przycisk wysyłania komentarza */
 #comment-submit-btn {
     padding: 8px 15px;
     border-radius: 18px;
@@ -454,28 +436,24 @@ body {
     background-color: #2d8fd6;
 }
 
-/* ========================================
-   9. PRAWA KOLUMNA (REKOMENDACJE)
-   ======================================== */
+.single-comment {
+    margin-top: 15px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
 
 .secondary-column {
     width: 400px;
-    flex-shrink: 0;             /* Nie kurczy się na wąskich ekranach */
+    flex-shrink: 0;
 }
 
-/* ========================================
-   10. FILTRY REKOMENDACJI
-   ======================================== */
-
-/* Kontener z filtrami (Wszystkie, Podobne, Najlepsze) */
 .sidebar-filters {
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
-    overflow-x: auto;           /* Przewijanie jeśli wiele filtrów */
+    overflow-x: auto;
 }
 
-/* Przycisk-tabletka filtra */
 .filter-btn {
     background-color: #272727;
     color: #f1f1f1;
@@ -484,7 +462,7 @@ body {
     padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;
-    white-space: nowrap;        /* Tekst w jednej linii */
+    white-space: nowrap;
     transition: all 0.2s ease;
 }
 
@@ -492,23 +470,19 @@ body {
     background-color: #3f3f3f;
 }
 
-/* Aktywny filtr */
 .filter-btn.active {
     background-color: #f1f1f1;
     color: #0f0f0f;
     font-weight: 600;
 }
 
-/* ========================================
-   11. REKOMENDOWANE WIDEO
-   ======================================== */
-
-/* Karta rekomendowanego wideo (pozioma) */
 .side-video {
     display: flex;
     gap: 8px;
     margin-bottom: 12px;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
     transition: opacity 0.2s ease;
 }
 
@@ -516,7 +490,6 @@ body {
     opacity: 0.8;
 }
 
-/* Miniatura wideo */
 .side-video img {
     width: 168px;
     height: 94px;
@@ -525,119 +498,112 @@ body {
     flex-shrink: 0;
 }
 
-/* Informacje o rekomendowanym wideo */
 .side-video-info {
     flex: 1;
-    min-width: 0;               /* Ważne dla text-overflow */
+    min-width: 0;
 }
 
-/* Tytuł wideo (maksimum 2 linie) */
 .side-video-info h4 {
     margin: 0 0 4px 0;
     font-size: 14px;
     color: #f1f1f1;
     line-height: 1.3;
     display: -webkit-box;
-    -webkit-line-clamp: 2;      /* Obcinamy na 2 liniach */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* Kanał i statystyki wideo */
 .side-video-info p {
     margin: 0;
     font-size: 12px;
     color: #aaaaaa;
 }
 
-/* ========================================
-   12. RESPONSYWNOŚĆ (SMARTFONY I TABLETY)
-   ======================================== */
-
-/* Na tabletach i smartfonach (szerokość ekranu do 1000px) */
 @media (max-width: 1000px) {
-    /* Zmieniamy układ z poziomego na pionowy */
     .watch-page-layout {
-        flex-direction: column;  /* Rekomendacje pod wideo */
+        flex-direction: column;
     }
-    
-    /* Rekomendacje zajmują całą szerokość */
     .secondary-column {
         width: 100%;
     }
-    
-    /* Informacje o kanale układają się pionowo */
     .watch-metadata {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-    
-    /* Przyciski akcji przestawiają się w responsywny układ */
     .action-buttons {
         flex-wrap: wrap;
     }
 }
 
-/* 1. Poprawiamy kontener logo */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Odstęp między ikoną a tekstem */
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0; /* Żeby logo się nie kurczyło */
-    min-width: 120px; /* Ustalamy minimalną szerokość, żeby tekst nie skakał */
+
+body:has(#theme-checkbox:checked) {
+    --bg-main: #f9f9f9;
+    --bg-search: #ffffff;
+    --bg-hover: #e5e5e5;
+    --bg-secondary: #f0f0f0;
+    --text-primary: #0f0f0f;
+    --text-secondary: #606060;
+    --border-color: #cccccc;
 }
 
-/* 2. Ustawiamy obrazki logo */
-.logo img {
-    width: 40px;
-    height: 25px;
-    object-fit: contain;
+
+body:has(#theme-checkbox:checked) .logo-dark { 
+    display: none; 
+}
+body:has(#theme-checkbox:checked) .logo-light { 
+    display: block; 
 }
 
-/* 3. Logika przełączania (teraz przez display: block) */
-.logo-dark { display: block; } /* Ciemny motyw — pokazujemy ciemne logo */
-.logo-light { display: none; }
 
-body.light-theme .logo-dark { display: none; }
-body.light-theme .logo-light { display: block; }
-
-/* 4. Poprawiamy "rozjeżdżanie się" nagłówka */
-.header {
-    padding: 0 16px;
-    gap: 10px; /* Niewielki odstęp między lewą, środkową i prawą częścią */
+body:has(#theme-checkbox:checked) label[for="theme-checkbox"] span::before {
+    content: "dark_mode";
+}
+body:has(#theme-checkbox:checked) label[for="theme-checkbox"] span {
+    font-size: 0; 
+}
+body:has(#theme-checkbox:checked) label[for="theme-checkbox"] span::before {
+    font-size: 24px; 
 }
 
-.start {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 0 0 auto; /* Lewa część się nie rozciąga */
+body:has(#theme-checkbox:checked) .action-btn,
+body:has(#theme-checkbox:checked) .like-dislike-group,
+body:has(#theme-checkbox:checked) .watch-description,
+body:has(#theme-checkbox:checked) .filter-btn {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
-.end {
-    display: flex;
-    align-items: center;
-    gap: 12px; /* Zmniejszymy odstęp między przyciskami, żeby wszystko się zmieściło */
-    flex: 0 0 auto; /* Prawa część się nie rozciąga */
+body:has(#theme-checkbox:checked) .channel-text strong,
+body:has(#theme-checkbox:checked) .side-video-info h4 {
+    color: var(--text-primary);
 }
 
-.center {
-    flex: 1; /* Tylko środek (wyszukiwanie) się rozciąga */
-    max-width: 720px; /* Ograniczymy wyszukiwanie, żeby nie wypychało przycisków */
-    margin: 0 20px;
+body:has(#theme-checkbox:checked) .subscribe-btn,
+body:has(#theme-checkbox:checked) .filter-btn.active {
+    background-color: #0f0f0f;
+    color: #f1f1f1;
 }
-/* KOLORY JASNEGO MOTYWU */
-body.light-theme {
-    --bg-main: #f9f9f9; --bg-search: #ffffff; --bg-secondary: #f0f0f0;
-    --text-primary: #0f0f0f; --text-secondary: #606060; --border-color: #cccccc;
+
+
+body:has(#theme-checkbox:checked) .add-comment input {
+    background-color: var(--bg-search);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
 }
-body.light-theme .action-btn, body.light-theme .like-dislike-group, 
-body.light-theme .watch-description, body.light-theme .filter-btn { background-color: #e5e5e5; color: #0f0f0f; }
-body.light-theme .channel-text strong, body.light-theme .side-video-info h4 { color: #0f0f0f; }
-body.light-theme .subscribe-btn { background-color: #0f0f0f; color: #ffffff; }
-body.light-theme .add-comment input { background-color: #ffffff; border-color: #cccccc; color: #0f0f0f; }
+
+#notif-checkbox:checked ~ .notif-dropdown {
+    display: block;
+}
+@media (max-width: 1150px) {
+    .watch-page-layout {
+        flex-direction: column;
+    }
+    .primary-column {
+        max-width: 100%;
+    }
+    .secondary-column {
+        width: 100%;
+    }
+}

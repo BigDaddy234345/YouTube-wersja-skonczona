@@ -1,31 +1,16 @@
-/* ========================================
-   1. ZMIENNE GLOBALNE I SCHEMAT KOLORÓW
-   ======================================== */
 :root {
-    /* Kolory tła */
-    --bg-main: #0f0f0f;         /* Główne czarne tło */
-    --bg-search: #121212;       /* Tło pola wyszukiwania */
-    --bg-hover: #272727;        /* Kolor przy najechaniu myszą */
-    --bg-secondary: #222222;    /* Tło elementów drugorzędnych */
-    
-    /* Kolory tekstu */
-    --text-primary: #ffffff;    /* Główny biały tekst */
-    --text-secondary: #aaaaaa;  /* Drugorzędny szary tekst */
-    
-    /* Obramowania i akcenty */
-    --border-color: #303030;    /* Kolor granic elementów */
-    --accent-red: #cc0000;      /* Czerwony akcent (powiadomienia) */
-    --focus-border: #1c62b9;    /* Niebieska ramka przy fokusu */
-    
-    /* Rozmiary */
-    --header-height: 56px;      /* Wysokość nagłówka */
+    --bg-main: #0f0f0f;
+    --bg-search: #121212;
+    --bg-hover: #272727;
+    --bg-secondary: #222222;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --border-color: #303030;
+    --accent-red: #cc0000;
+    --focus-border: #1c62b9;
+    --header-height: 56px;
 }
 
-/* ========================================
-   2. RESET STYLÓW I ELEMENTY BAZOWE
-   ======================================== */
-
-/* Usuwamy marginesy i obramowania domyślne */
 * {
     margin: 0;
     padding: 0;
@@ -33,33 +18,26 @@
     font-family: 'Roboto', Arial, sans-serif;
 }
 
-/* Główne tło i tekst strony */
 body {
     background-color: var(--bg-main);
     color: var(--text-primary);
-    overflow-x: hidden;           /* Brak poziomego przewijania */
-    padding-top: var(--header-height);  /* Margines pod nagłówek */
-    padding-left: 240px;          /* Margines pod menu boczne */
+    overflow-x: hidden;
+    padding-top: var(--header-height);
+    padding-left: 240px;
+    transition: padding-left 0.3s ease;
 }
 
-/* Ikony Google Material Symbols */
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     font-size: 24px;
-    user-select: none;            /* Ikony nie są wybierane jako tekst */
+    user-select: none;
 }
 
-/* Wypełnione ikony (dla stanów aktywnych) */
 .filled-icon {
     font-variation-settings: 'FILL' 1;
 }
 
-/* ========================================
-   3. NAGŁÓWEK (HEADER) I NAWIGACJA
-   ======================================== */
-
-/* Nagłówek przylepiony u góry */
-.header {
+.pasek-gora {
     position: fixed;
     top: 0;
     left: 0;
@@ -70,22 +48,33 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    z-index: 1000;              /* Nad wszystkimi elementami */
+    gap: 10px;
+    z-index: 1000;
 }
 
-/* Kontenery do rozdzielenia elementów w nagłówku */
-.start, .center, .end {
+.start {
     display: flex;
     align-items: center;
-}
-
-/* Lewa część nagłówka (logo + menu) */
-.start {
     gap: 12px;
-    flex: 0 0 auto;             /* Nie rozciąga się */
+    flex: 0 0 auto;
 }
 
-/* Logo */
+.center {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    max-width: 720px;
+    margin: 0 16px;
+}
+
+.koniec {
+    display: flex;
+    align-items: center;
+    justify-content: flex-koniec;
+    gap: 16px;
+    flex: 0 0 auto;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -94,14 +83,18 @@ body {
     font-weight: 700;
     cursor: pointer;
     position: relative;
+    flex-shrink: 0;
+    min-width: 120px;
+    text-decoration: none;
+    color: var(--text-primary);
 }
 
 .logo img {
     width: 40px;
     height: 25px;
+    object-fit: contain;
 }
 
-/* Kod kraju (na przykład PL) obok logo */
 .country-code {
     position: absolute;
     top: -2px;
@@ -110,35 +103,27 @@ body {
     color: var(--text-secondary);
 }
 
-/* Środkowa część nagłówka (wyszukiwanie) */
-.center {
-    flex: 1;                    /* Rozciąga się i zajmuje wolne miejsce */
-    gap: 16px;
-    justify-content: center;
-    max-width: 850px;
-    margin: 0 auto;             /* Wyśrodkowujemy */
-}
+.logo-dark { display: block; }
+.logo-light { display: none; }
+body.light-theme .logo-dark { display: none; }
+body.light-theme .logo-light { display: block; }
 
-/* Pole wyszukiwania ze zaokrąglonymi krawędziami */
-.search-box {
+.wyszukiwarka {
     display: flex;
-    flex: 1;                    /* Zajmuje całą dostępną przestrzeń */
+    flex: 1;
     height: 40px;
     background-color: var(--bg-search);
     border: 1px solid var(--border-color);
     border-radius: 40px;
     overflow: hidden;
-    margin-left: 32px;
-    transition: border-color 0.2s ease;  /* Płynna zmiana koloru ramki */
+    transition: border-color 0.2s ease;
 }
 
-/* Po przeniesieniu fokusu pole wyszukiwania wyróżnia się niebieską ramką */
-.search-box:focus-within {
+.wyszukiwarka:focus-within {
     border-color: var(--focus-border);
 }
 
-/* Pole wprowadzania tekstu */
-.search-input {
+.pole-szukaj {
     width: 100%;
     background: transparent;
     border: none;
@@ -148,23 +133,10 @@ body {
     outline: none;
 }
 
-.search-input::placeholder {
+.pole-szukaj::placeholder {
     color: #888;
 }
 
-/* Ikona klawiatury w wyszukiwaniu */
-.keyboard-icon {
-    padding: 0 8px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.keyboard-icon:hover {
-    color: var(--text-primary);
-}
-
-/* Przycisk wyszukiwania (lupa) */
 .search-btn {
     width: 64px;
     background-color: var(--bg-secondary);
@@ -179,18 +151,6 @@ body {
     background-color: #303030;
 }
 
-/* ========================================
-   4. PRAWA CZĘŚĆ NAGŁÓWKA (PRZYCISKI I PROFIL)
-   ======================================== */
-
-/* Kontener dla przycisków po prawej */
-.end {
-    gap: 20px;
-    justify-content: flex-end;
-    flex: 0 0 auto;             /* Nie rozciąga się */
-}
-
-/* Okrągłe przyciski (menu, powiadomienia itp.) */
 .menu-icon {
     width: 40px;
     height: 40px;
@@ -203,14 +163,12 @@ body {
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s ease;
-    position: relative;         /* Do pozycjonowania odznaki */
 }
 
 .menu-icon:hover {
     background-color: var(--bg-hover);
 }
 
-/* Przycisk tworzenia wideo (owalny) */
 .create-btn {
     display: flex;
     align-items: center;
@@ -230,7 +188,6 @@ body {
     background-color: #303030;
 }
 
-/* Czerwona odznaka dla powiadomień (licznik) */
 .badge {
     position: absolute;
     top: -5px;
@@ -243,7 +200,6 @@ body {
     font-weight: bold;
 }
 
-/* Awatar użytkownika */
 .avatar {
     width: 32px;
     height: 32px;
@@ -258,24 +214,56 @@ body {
     transform: scale(1.1);
 }
 
-/* ========================================
-   5. MENU BOCZNE (SIDEBAR)
-   ======================================== */
+.notification-wrapper {
+    position: relative;
+}
 
-/* Główny kontener menu bocznego */
+.notif-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: none;
+    padding: 16px;
+}
+
+.notif-dropdown.open {
+    display: block;
+}
+
+.notif-empty {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-align: center;
+    padding: 16px 0;
+}
+
 .sidebar {
     width: 240px;
     position: fixed;
     top: var(--header-height);
     left: 0;
-    height: calc(100vh - var(--header-height));  /* Cała wysokość minus nagłówek */
+    height: calc(100vh - var(--header-height));
     padding: 12px;
-    overflow-y: auto;           /* Przewijanie jeśli wiele pozycji */
+    overflow-y: auto;
     background-color: var(--bg-main);
-    z-index: 900;               /* Pod nagłówkiem */
+    z-index: 900;
+    transition: transform 0.3s ease;
 }
 
-/* Styl paska przewijania */
+.sidebar.sidebar-hidden {
+    transform: translateX(-240px);
+}
+
+body.sidebar-collapsed {
+    padding-left: 0;
+}
+
 .sidebar::-webkit-scrollbar {
     width: 8px;
 }
@@ -289,15 +277,13 @@ body {
     background: #999;
 }
 
-/* Separator między sekcjami */
 hr {
     border: none;
     border-top: 1px solid #3f3f3f;
     margin: 12px 0;
 }
 
-/* Tytuły sekcji (Subskrypcje, Twoja biblioteka itp.) */
-.section-title {
+.sekcja-title {
     font-size: 16px;
     padding: 0 12px;
     margin-bottom: 8px;
@@ -305,7 +291,6 @@ hr {
     font-weight: 500;
 }
 
-/* Pozycje menu */
 .item {
     display: flex;
     align-items: center;
@@ -314,20 +299,20 @@ hr {
     border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
+    color: var(--text-primary);
     transition: background-color 0.2s ease;
 }
 
-/* Po najechaniu myszą lub aktywna pozycja */
 .item:hover,
 .item.active {
-    background-color: #272727;
+    background-color: var(--bg-hover);
 }
 
 .item.active {
     font-weight: 500;
 }
 
-/* Ikony w pozycjach menu */
 .item i {
     width: 24px;
     margin-right: 16px;
@@ -335,69 +320,53 @@ hr {
     text-align: center;
 }
 
-/* Awatary kanałów (mniejsze) */
 .avatar-sm {
     width: 24px;
     height: 24px;
     border-radius: 50%;
     margin-right: 16px;
     object-fit: cover;
+    flex-shrink: 0;
 }
 
-/* ========================================
-   6. SIATKA WIDEO (STRONA GŁÓWNA)
-   ======================================== */
-
-/* CSS Grid do responsywnego rozmieszczenia wideo */
 .video-grid {
     display: grid;
-    /* Automatyczne wypełnianie: jeśli ekran duży - 4+ wideo w rzędzie,
-       jeśli mały - 2-3. Minimalna szerokość wideo 300px */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px 16px;
     padding: 24px;
 }
 
-/* Karta wideo */
 .video-card {
     width: 100%;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
-.video-card:hover {
-    transform: translateY(-8px);  /* Unosi się przy najechaniu */
+.thumbnail-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-.thumbnail-container { 
-    width: 100%; 
-    aspect-ratio: 16 / 9; 
-    margin-bottom: 12px; 
-    position: relative; 
-    border-radius: 12px; /* Zaokrąglamy sam kontener */
-    overflow: hidden;    /* Ukrywamy wszystko, co wykracza poza granice kontenera przy powiększeniu */
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.thumbnail { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: transform 0.3s ease; /* Dodajemy płynność (0,3 sekundy) */
+.video-card:hover .thumbnail {
+    transform: scale(1.05);
 }
 
-/* Ta sama magia: gdy najedziesz myszką na kartę, obraz wewnątrz rośnie */
-.video-card:hover .thumbnail { 
-    transform: scale(1.05); /* Zwiększamy skalę o 5% */
-}
-
-/* Informacja pod wideo */
 .video-info-container {
     display: flex;
     gap: 12px;
     position: relative;
 }
 
-/* Awatar kanału */
 .channel-avatar {
     width: 36px;
     height: 36px;
@@ -405,25 +374,22 @@ hr {
     flex-shrink: 0;
 }
 
-/* Tekst wideo (tytuł + kanał) */
 .video-text {
     flex: 1;
     padding-right: 20px;
-    min-width: 0;               /* Ważne dla text-overflow */
+    min-width: 0;
 }
 
-/* Tytuł wideo (maksimum 2 linie) */
 .video-title {
     margin: 0 0 6px 0;
     font-size: 16px;
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 2;      /* Obcinamy na 2 liniach */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* Nazwa kanału i statystyki */
 .channel-name,
 .video-stats {
     margin: 0;
@@ -431,109 +397,118 @@ hr {
     color: #aaa;
 }
 
-/* Przycisk "więcej" (trzy kropki) */
 .more-btn {
     position: absolute;
     right: 0;
     top: 4px;
-    opacity: 0;                 /* Ukryty domyślnie */
+    opacity: 0;
+    cursor: pointer;
     transition: opacity 0.2s ease;
 }
 
-/* Pokazujemy przycisk przy najechaniu na kartę */
 .video-card:hover .more-btn {
     opacity: 1;
 }
 
-/* ========================================
-   7. RESPONSYWNOŚĆ (URZĄDZENIA MOBILNE)
-   ======================================== */
+.no-results {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    color: var(--text-secondary);
+    gap: 16px;
+    font-size: 16px;
+    text-align: center;
+}
 
-/* Na smartfonach (szerokość ekranu do 800px) */
+.no-results i {
+    font-size: 48px;
+}
+
 @media (max-width: 800px) {
-    /* Usuwamy lewy margines dla menu bocznego */
     body {
         padding-left: 0;
     }
-    
-    /* Ukrywamy menu boczne */
     .sidebar {
-        display: none;
+        transform: translateX(-240px);
     }
-    
-    /* Powiększamy wideo */
     .video-grid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
 }
 
-/* 1. Poprawiamy kontener logo */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Odstęp między ikoną a tekstem */
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0; /* Żeby logo się nie kurczyło */
-    min-width: 120px; /* Ustalamy minimalną szerokość, żeby tekst nie skakał */
-}
-
-/* 2. Ustawiamy obrazki logo */
-.logo img {
-    width: 40px;
-    height: 25px;
-    object-fit: contain;
-}
-
-/* 3. Logika przełączania (teraz przez display: block) */
-.logo-dark { display: block; } /* Ciemny motyw — pokazujemy ciemne logo */
-.logo-light { display: none; }
-
-body.light-theme .logo-dark { display: none; }
-body.light-theme .logo-light { display: block; }
-
-/* 4. Poprawiamy "rozjeżdżanie się" nagłówka */
-.header {
-    padding: 0 16px;
-    gap: 10px; /* Niewielki odstęp między lewą, środkową i prawą częścią */
-}
-
-.header { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: var(--header-height); 
-    background-color: var(--bg-main); 
-    display: flex; 
-    justify-content: space-between; /* Ta magia rozsuwa bloki na krańce ekranu */
-    align-items: center; 
-    padding: 0 24px; /* Nieco zwiększone marginesy od krawędzi monitora, jak na YouTube */
-    z-index: 1000; 
-}
-
-.center { 
-    display: flex; 
-    flex: 1; 
-    justify-content: center; /* Centrujemy samo wyszukiwanie wewnątrz centralnego bloku */
-    max-width: 720px; 
-    margin: 0 20px; 
-}
-
-.end { 
-    display: flex; 
-    align-items: center; 
-    justify-content: flex-end; /* Sztywno przypinamy ikony do prawej krawędzi */
-    gap: 15px; 
-    flex-shrink: 0; 
-    min-width: 150px; /* Żeby wyszukiwanie nie wypychało ikon */
-}
-
-/* KOLORY JASNEGO MOTYWU */
-body.light-theme {
-    --bg-main: #f9f9f9; --bg-search: #ffffff; --bg-hover: #e5e5e5;
-    --bg-secondary: #f0f0f0; --text-primary: #0f0f0f; --text-secondary: #606060;
+body:has(#theme-checkbox:checked) {
+    --bg-main: #f9f9f9;
+    --bg-search: #ffffff;
+    --bg-hover: #e5e5e5;
+    --bg-secondary: #f0f0f0;
+    --text-primary: #0f0f0f;
+    --text-secondary: #606060;
     --border-color: #cccccc;
+}
+
+
+body:has(#theme-checkbox:checked) .logo-dark { 
+    display: none; 
+}
+body:has(#theme-checkbox:checked) .logo-light { 
+    display: block; 
+}
+
+
+body:has(#theme-checkbox:checked) label[for="theme-checkbox"] span::before {
+    content: "dark_mode";
+}
+body:has(#theme-checkbox:checked) label[for="theme-checkbox"] span {
+    font-size: 0; 
+}
+body:has(#theme-checkbox:checked) label[for="theme-checkbox"] span::before {
+    font-size: 24px; 
+}
+.video-card:hover .thumbnail {
+    transform: scale(1.05);
+}
+
+#notif-checkbox:checked ~ .notif-dropdown {
+    display: block;
+}
+.pasek-gora {
+    background: rgba(15, 15, 15, 0.8) !important;
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(156, 39, 176, 0.3); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+body {
+    background-color: #0f0f0f; 
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px; 
+}
+
+.video-card {
+    background: #0f0f0f;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 12px;
+}
+body {
+    background-image: 
+        linear-gradient(90deg, rgba(156, 39, 176, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(156, 39, 176, 0.05) 1px, transparent 1px);
+    background-position: 240px 0, calc(100% - 20px) 0; 
+    background-repeat: repeat-y;
+    background-size: 2px 100%;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 0% 0%, rgba(156, 39, 176, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(156, 39, 176, 0.03) 0%, transparent 50%);
+    pointer-events: none; 
+    z-index: -1;
 }
