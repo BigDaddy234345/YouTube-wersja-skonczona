@@ -22,7 +22,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 ?>
 <!DOCTYPE html>
 <html lang="pl">
-<head>
+<head>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube</title>
@@ -137,11 +137,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     <hr>
 
-    <div class="sekcja">
-        <h3 class="sekcja-title">Inne możliwości</h3>
-       <a href="watch.php?id=ТВОЙ_ID&autoplay=1" class="item">
-         <i class="fa-brands fa-youtube" style="color:#ff0000"></i>
-        <span>YouTube Premium</span>
+<a href="premium.php" target="_blank" class="btn-premium">YouTube Premium</a>
+    
 </a>
     </div>
 </nav>

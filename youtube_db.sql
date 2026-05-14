@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Май 14 2026 г., 09:44
--- Версия сервера: 10.4.32-MariaDB
--- Версия PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Maj 14, 2026 at 12:57 PM
+-- Wersja serwera: 10.4.32-MariaDB
+-- Wersja PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `youtube_db`
+-- Database: `youtube_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `comments`
+-- Struktura tabeli dla tabeli `comments`
 --
 
 CREATE TABLE `comments` (
@@ -36,16 +36,21 @@ CREATE TABLE `comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `comments`
+-- Dumping data for table `comments`
 --
 
 INSERT INTO `comments` (`id`, `video_id`, `author_name`, `comment_text`, `created_at`) VALUES
-(1, 98, 'Gość', 'asdasd', '2026-05-14 07:22:42');
+(1, 98, 'Gość', 'asdasd', '2026-05-14 07:22:42'),
+(2, 29, 'Gość', 'das', '2026-05-14 10:12:36'),
+(3, 89, 'Gość', 'ale gówno', '2026-05-14 10:21:06'),
+(4, 4, 'Gość', 'Huesos e', '2026-05-14 10:31:17'),
+(5, 4, 'Gość', 'eblan', '2026-05-14 10:31:32'),
+(6, 32, 'Gość', 'ale gówno', '2026-05-14 10:55:50');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `videos`
+-- Struktura tabeli dla tabeli `videos`
 --
 
 CREATE TABLE `videos` (
@@ -62,7 +67,7 @@ CREATE TABLE `videos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `videos`
+-- Dumping data for table `videos`
 --
 
 INSERT INTO `videos` (`id`, `title`, `video_url`, `description`, `thumbnail`, `channel_name`, `stats`, `created_at`, `category`, `likes`) VALUES
@@ -93,10 +98,10 @@ INSERT INTO `videos` (`id`, `title`, `video_url`, `description`, `thumbnail`, `c
 (26, 'HTML & CSS od zera - Poradnik', 'https://www.youtube.com/embed/opNgrPv3Qw8?si=hT_Va3yzXRjWP3FL', 'Naucz się tworzyć strony internetowe z naszym darmowym kursem.', 'images/img29.jpg', 'FrontEnd PL', '900 tys. wyświetleń • 2 lata temu', '2026-04-04 20:20:07', 'programowanie', 0),
 (27, 'Najlepsze gole sezonu 2025/2026', 'https://www.youtube.com/embed/pXxsBDM2Xo8?si=a5yDE6h-Dz_C8m3o', 'Kompilacja najbardziej spektakularnych bramek sezonu.', 'images/img30.jpg', 'Piłkarski Świat', '4.2 mln wyświetleń • 1 rok temu', '2026-04-04 20:20:07', 'sport', 0),
 (28, 'lofi hip hop radio - beats to relax/study to', 'https://www.youtube.com/embed/lTRiuFIWV54?si=JMP3dcoXqBlNm8Av', 'Spokojne bity lofi do relaksu, nauki i programowania.', 'images/img31.webp', 'Chillout Beats', '15 mln wyświetleń • 4 lata temu', '2026-04-04 20:20:07', 'muzyka', 0),
-(29, 'Najważniejsze wydarzenia tygodnia', 'https://www.youtube.com/embed/1G5YiO90RCA?si=6AU_N5v7JbNFQeNt', 'Podsumowanie najważniejszych newsów z ostatnich 7 dni.', 'images/img32.jpg', 'Tydzień w Pigułce', '55 tys. wyświetleń • 2 dni temu', '2026-04-04 20:20:07', 'wiadomosci', 0),
+(29, 'Najważniejsze wydarzenia tygodnia', 'https://www.youtube.com/embed/1G5YiO90RCA?si=6AU_N5v7JbNFQeNt', 'Podsumowanie najważniejszych newsów z ostatnich 7 dni.', 'images/img32.jpg', 'Tydzień w Pigułce', '55 tys. wyświetleń • 2 dni temu', '2026-04-04 20:20:07', 'wiadomosci', 1),
 (30, 'Szybki deser w 5 minut bez pieczenia', 'https://www.youtube.com/embed/KdhewFv3VEs?si=genpGJBm47jJX146', 'Genialny przepis na coś słodkiego, gdy nie masz czasu.', 'images/img33.jpg', 'Słodka Chwila', '3.1 mln wyświetleń • 8 miesięcy temu', '2026-04-04 20:20:07', 'jedzenie', 0),
 (31, 'Zwiedzamy Paryż - Wieża Eiffla', 'https://www.youtube.com/embed/dl-9OYz02rw?si=zucC0PLrjJV3P5Uq', 'Romantyczny wyjazd do stolicy Francji. Co warto wiedzieć?', 'images/img34.jpg', 'Francja Elegancja', '400 tys. wyświetleń • 1 rok temu', '2026-04-04 20:20:07', 'podroze', 0),
-(32, 'Test klawiatury mechanicznej za 100 zł', 'https://www.youtube.com/embed/QQLSy8nj0sE?si=VuIzfNPMDKCZWc07', 'Czy tania klawiatura mechaniczna ma w ogóle sens?', 'images/img35.jpg', 'Tani Sprzęt', '220 tys. wyświetleń • 3 tygodnie temu', '2026-04-04 20:20:07', 'technologia', 0),
+(32, 'Test klawiatury mechanicznej za 100 zł', 'https://www.youtube.com/embed/QQLSy8nj0sE?si=VuIzfNPMDKCZWc07', 'Czy tania klawiatura mechaniczna ma w ogóle sens?', 'images/img35.jpg', 'Tani Sprzęt', '220 tys. wyświetleń • 3 tygodnie temu', '2026-04-04 20:20:07', 'technologia', 1),
 (33, 'JavaScript: Obiekty i Klasy', 'https://www.youtube.com/embed/vY4lL2Mro8c?si=EVXK1AQNhaPbZ6pO', 'Tłumaczymy programowanie obiektowe w JS krok po kroku.', 'images/img36.jpg', 'JS Master', '34 tys. wyświetleń • 6 miesięcy temu', '2026-04-04 20:20:07', 'programowanie', 0),
 (34, 'Efektywny trening w domu - 20 min', 'https://www.youtube.com/embed/DAo5uVxzZ-Q?si=8j2k-BuYORhwGLZ9', 'Domowy trening bez sprzętu, który spali mnóstwo kalorii.', 'images/img37.jpg', 'Fit Forma', '5.5 mln wyświetleń • 2 lata temu', '2026-04-04 20:20:07', 'sport', 0),
 (35, 'Epic Cinematic Soundtrack Mix', 'https://www.youtube.com/embed/c-XpTMGPQvI?si=knZJr0Sr1tv7EECS', 'Epicka muzyka filmowa do czytania i grania.', 'images/img38.jpg', 'Epic Sound', '7 mln wyświetleń • 5 lat temu', '2026-04-04 20:20:07', 'muzyka', 0),
@@ -119,7 +124,7 @@ INSERT INTO `videos` (`id`, `title`, `video_url`, `description`, `thumbnail`, `c
 (52, 'Najszybsze biegi na 100m w historii', 'https://www.youtube.com/embed/5GtPDnuTpCc?si=S76Y5_vvt-3wv8jK', 'Rekordy świata i legendarni sprinterzy na bieżni.', 'images/img55.jpg', 'Lekkoatletyka', '8.2 mln wyświetleń • 6 lat temu', '2026-04-04 20:20:07', 'sport', 0),
 (53, 'Elektroniczna muzyka do pracy', 'https://www.youtube.com/embed/Zs1c-_hX7To?si=mJDJrmGghraz-xzl', 'Zwiększ swoją produktywność z odpowiednim tłem muzycznym.', 'images/img56.jpg', 'Focus Beats', '350 tys. wyświetleń • 7 miesięcy temu', '2026-04-04 20:20:07', 'muzyka', 0),
 (54, 'Sytuacja na drogach - Korki i remonty', 'https://www.youtube.com/embed/5s6-btqATvM?si=9wubDmUtOPSFiNSS', 'Gdzie uważać, a gdzie omijać wielkie utrudnienia.', 'images/img57.jpg', 'Drogówka PL', '40 tys. wyświetleń • 3 godziny temu', '2026-04-04 20:20:07', 'wiadomosci', 0),
-(55, 'Tradycyjny polski schabowy', 'hhttps://www.youtube.com/embed/SJ0EAw0rSyI?si=W0l5SGqs1tDhwxX2', 'Sekret idealnej panierki zdradza prawdziwy mistrz kuchni.', 'images/img58.jpg', 'Babcia Gotuje', '1.1 mln wyświetleń • 2 lata temu', '2026-04-04 20:20:07', 'jedzenie', 0),
+(55, 'Tradycyjny polski schabowy', 'https://www.youtube.com/embed/LI7XULlePAI?si=QYNzfXcyriO5Aojq', 'Sekret idealnej panierki zdradza prawdziwy mistrz kuchni.', 'images/img58.jpg', 'Babcia Gotuje', '1.1 mln wyświetleń • 2 lata temu', '2026-04-04 20:20:07', 'jedzenie', 1),
 (56, 'Roadtrip po USA - Route 66', 'https://www.youtube.com/embed/PTetDhC_Fys?si=DlmJVqY64EoFcHLH', 'Przejazd przez kultową drogę w Stanach Zjednoczonych.', 'images/img59.jpg', 'Ameryka PL', '280 tys. wyświetleń • 9 miesięcy temu', '2026-04-04 20:20:07', 'podroze', 0),
 (57, 'Nowy system operacyjny - Zmiany', 'https://www.youtube.com/embed/uFKB6ZSEHps?si=fi7xfCYbg1nTErfe', 'Sprawdzamy, co oferuje najnowsza aktualizacja systemu.', 'images/img60.jpg', 'OS Review', '150 tys. wyświetleń • 1 miesiąc temu', '2026-04-04 20:20:07', 'technologia', 0),
 (58, 'C++ dla opornych - Część 1', 'https://www.youtube.com/embed/hZnUaSBhV80?si=CkrUA9zInoRIwz7x', 'Trudny język wytłumaczony w najprostszy możliwy sposób.', 'images/img61.jpg', 'Hard Coder', '25 tys. wyświetleń • 3 lata temu', '2026-04-04 20:20:07', 'programowanie', 0),
@@ -153,7 +158,7 @@ INSERT INTO `videos` (`id`, `title`, `video_url`, `description`, `thumbnail`, `c
 (86, 'Sushi w domu - To prostsze niż myślisz!', 'https://www.youtube.com/embed/YfLmbNiBOBM?si=YhX5NQ6-tz2RySNk', 'Wszystko czego potrzebujesz, aby zrobić domowe maki i nigiri.', 'images/img89.jpg', 'Azjatyckie Smaki', '1.4 mln wyświetleń • 1 rok temu', '2026-04-06 20:42:41', 'jedzenie', 0),
 (87, 'Zgubieni w Tokio - Nocny vlog', 'https://www.youtube.com/embed/TXYJM49xbEw?si=Ic2j07h-6qw1_v7P', 'Spacer po najbardziej oświetlonym mieście świata.', 'images/img90.jpg', 'World Walker', '500 tys. wyświetleń • 3 miesiące temu', '2026-04-06 20:42:41', 'podroze', 0),
 (88, 'Czy to koniec konsol do gier?', 'https://www.youtube.com/embed/XF4vjf8X7Hk?si=pnDlHfLm8rNkRBF8', 'Cloud gaming vs tradycyjne konsole. Co wybiorą gracze?', 'images/img91.jpg', 'Gaming News', '750 tys. wyświetleń • 2 tygodnie temu', '2026-04-06 20:42:41', 'technologia', 0),
-(89, 'Jak stworzyć własną grę w Unity?', 'https://www.youtube.com/embed/fiJ43jDYg4I?si=igKRkQLlDDraygbv', 'Tworzymy prostą grę platformową od zera.', 'images/img92.jpg', 'Dev Studio', '110 tys. wyświetleń • 2 lata temu', '2026-04-06 20:42:41', 'programowanie', 0),
+(89, 'Jak stworzyć własną grę w Unity?', 'https://www.youtube.com/embed/fiJ43jDYg4I?si=igKRkQLlDDraygbv', 'Tworzymy prostą grę platformową od zera.', 'images/img92.jpg', 'Dev Studio', '110 tys. wyświetleń • 2 lata temu', '2026-04-06 20:42:41', 'programowanie', 1),
 (90, 'Trening siłowy dla biegaczy', 'https://www.youtube.com/embed/GcZJhNi2yOM?si=fHwkXdHT4UGJXu2z', 'Zestaw ćwiczeń, które poprawią Twoją wytrzymałość.', 'images/img93.jpg', 'Biegaj Zdrowo', '280 tys. wyświetleń • 5 miesięcy temu', '2026-04-06 20:42:41', 'sport', 0),
 (91, 'Najmądrzejsze rasy psów - Ranking', 'https://www.youtube.com/embed/F78KOz9fGYY?si=YMN8vUvVtGc1a-h1', 'Sprawdź, czy Twój pupil znalazł się na liście!', 'images/img94.jpg', 'Pieskie Życie', '3.8 mln wyświetleń • 1 rok temu', '2026-04-06 20:42:41', 'zwierzeta', 0),
 (92, 'Bitwa pod Grunwaldem - Rekonstrukcja', 'https://www.youtube.com/embed/zvd79swrW8o?si=f3b-hH-youl4kuiC', 'Jak naprawdę wyglądało największe starcie średniowiecznej Europy?', 'images/img95.jpg', 'Historia PL', '1.2 mln wyświetleń • 9 miesięcy temu', '2026-04-06 20:42:41', 'historia', 0),
@@ -168,33 +173,33 @@ INSERT INTO `videos` (`id`, `title`, `video_url`, `description`, `thumbnail`, `c
 (101, 'Historia Igrzysk Olimpijskich', 'https://www.youtube.com/embed/aNJDcWes_o0?si=j6NzJZnjF-Comnjc', 'Od starożytności do współczesnych stadionów.', 'images/img104.jpg', 'Sport i Historia', '1.3 mln wyświetleń • 2 lata temu', '2026-04-06 20:42:41', 'historia', 0);
 
 --
--- Индексы сохранённых таблиц
+-- Indeksy dla zrzutów tabel
 --
 
 --
--- Индексы таблицы `comments`
+-- Indeksy dla tabeli `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `videos`
+-- Indeksy dla tabeli `videos`
 --
 ALTER TABLE `videos`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `comments`
+-- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT для таблицы `videos`
+-- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
